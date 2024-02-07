@@ -7,8 +7,28 @@ class HotelManager:
         pass
 
     def validatecreditcard( self, x ):
-        y = x
-        return True
+        Caracter = int(x[15])
+        Suma = 0
+        contador = 0
+        while contador != 15:
+            if contador%2 == 0:
+                Resultado = int(x[contador]) * 2
+                if Resultado - 10 >= 0:
+                    Suma += 1 + (Resultado - 10)
+                else:
+                    Suma += Resultado
+            else:
+                Suma += int(x[contador])
+            contador += 1
+
+        Suma = Suma * 9
+        Digito = str(Suma)
+        Digito = int(Digito[-1])
+
+        if Digito == Caracter:
+            return True
+        else:
+            return False
 
     def ReaddatafromJSOn( self, fi):
 
