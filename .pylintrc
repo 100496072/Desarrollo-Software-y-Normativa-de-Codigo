@@ -114,9 +114,7 @@ unsafe-load-any-extension=no
 [BASIC]
 
 # Naming style matching correct argument names.
-# REGLA MODIFICADA
-# argument-naming-style=snake_case
-argument-naming-style=PascalCase
+argument-naming-style=snake_case
 
 # Regular expression matching correct argument names. Overrides argument-
 # naming-style. If left empty, argument names will be checked with the set
@@ -124,9 +122,7 @@ argument-naming-style=PascalCase
 #argument-rgx=
 
 # Naming style matching correct attribute names.
-# REGLA MODIFICADA
-# attr-naming-style=snake_case
-attr-naming-style=PascalCase
+attr-naming-style=snake_case
 
 # Regular expression matching correct attribute names. Overrides attr-naming-
 # style. If left empty, attribute names will be checked with the set naming
