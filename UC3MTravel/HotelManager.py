@@ -30,6 +30,7 @@ class HotelManager:
         else:
             return False
 
+
     def ReaddatafromJSOn( self, fi):
 
         try:
