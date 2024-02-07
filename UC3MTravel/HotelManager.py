@@ -16,7 +16,7 @@ class HotelManager:
                 if Resultado - 10 >= 0:
                     Suma += 1 + (Resultado - 10)
                 else:
-                    Suma += Resutado
+                    Suma += Resultado
 
             else:
                 Suma += int(x[contador])
