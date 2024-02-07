@@ -5,7 +5,7 @@ def main():
     """Funcion Principal"""
     mng = HotelManager()
     res = mng.ReaddatafromJSOn("test.json")
-    strRes = res.__str__()
+    strRes = str(res)
     print(strRes)
     print("CreditCard: " + res.CREDITCARD)
     print(res.LOCALIZER)
