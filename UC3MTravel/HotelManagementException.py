@@ -1,13 +1,18 @@
+"""Hola"""
+
 class HotelManagementException(Exception):
-    def __init__(self, message):
-        self.__message = message
-        super().__init__(self.message)
+    """Hola"""
+    def __init__(self, Message):
+        """Hola"""
+        self.__Message = Message
+        super().__init__(self.Message)
 
     @property
-    def message(self):
-        return self.__message
+    def Message(self):
+        """Hola"""
+        return self.__Message
 
-    @message.setter
-    def message(self,value):
-        self.__message = value
-
+    @Message.Setter
+    def Message(self,Value):
+        """Hola"""
+        self.__Message = Value
