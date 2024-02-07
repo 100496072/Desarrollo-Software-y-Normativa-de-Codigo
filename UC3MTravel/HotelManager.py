@@ -6,9 +6,24 @@ class HotelManager:
     def __init__(self):
         pass
 
-    def validatecreditcard( self, x ):
-        y = x
-        return True
+    def validatecreditcard( self, x:str ):
+        aux = 0
+        for i in range(len(x) - 1):
+            k = int(x[i])
+            if i % 2 == 0:
+                k = k*2
+                if k >= 10:
+                    k = str(k)
+                    j = k[0]
+                    k = k[1]
+                    j = int(j)
+                    k = int(k)
+                    k += j
+            aux += k
+        if (aux * 9) % 10 == int(x[15]):
+            return True
+        else:
+            return False
 
     def ReaddatafromJSOn( self, fi):
 
