@@ -8,6 +8,7 @@ class HotelManager:
         pass
 
     def validatecreditcard( self, x ):
+
         Caracter = int(x[15])
         Suma = 0
         contador = 0

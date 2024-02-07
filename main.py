@@ -1,10 +1,9 @@
-#THIS MAIN PROGRAM IS ONLY VALID FOR THE FIRST THREE WEEKS OF CLASS
-#IN GUIDED EXERCISE 2.2, TESTING MUST BE PERFORMED USING UNITTESTS.
-
+""""Parte 1 Ejercicio 2"""
 from UC3MTravel import HotelManager
 
 
 def main():
+    """Funcion Principal"""
     mng = HotelManager()
     res = mng.ReaddatafromJSOn("test.json")
     strRes = res.__str__()
