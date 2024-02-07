@@ -4,9 +4,11 @@ from .HotelReservation import HotelReservation
 
 class HotelManager:
     def __init__(self):
+
         pass
 
     def validatecreditcard( self, x ):
+
         Caracter = int(x[15])
         Suma = 0
         contador = 0
@@ -29,7 +31,6 @@ class HotelManager:
             return True
         else:
             return False
-
 
     def ReaddatafromJSOn( self, fi):
 
