@@ -6,12 +6,12 @@ class HotelManager:
     def __init__(self):
         pass
 
-    def validatecreditcard( self, x ):
+    def ValidateCreditCard( self, x ):
 
         Suma = 0
-        contador = 0
+        Contador = 0
         for i in range(len(x) - 1):
-            if contador % 2 == 0:
+            if Contador % 2 == 0:
                 Resultado = int(x[i]) * 2
                 if Resultado >= 10:
                     Suma += 1 + (Resultado - 10)
@@ -24,7 +24,7 @@ class HotelManager:
             return True
         return False
 
-    def ReaddatafromJSOn( self, fi):
+    def ReadDataFromJSOn( self, fi):
 
         try:
             with open(fi) as f:
@@ -41,7 +41,7 @@ class HotelManager:
             req = HotelReservation(IDCARD="12345678Z",creditcardNumb=c,nAMeAndSURNAME="John Doe",phonenumber=p,room_type="single",numdays=3)
         except KeyError as e:
             raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from e
-        if not self.validatecreditcard(c):
+        if not self.ValidateCreditCard(c):
             raise HotelManagementException("Invalid credit card number")
 
         # Close the file
