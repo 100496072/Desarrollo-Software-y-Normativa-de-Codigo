@@ -17,6 +17,7 @@ class HotelManager:
                     Suma += 1 + (Resultado - 10)
                 else:
                     Suma += Resultado
+
             else:
                 Suma += int(x[contador])
             contador += 1
