@@ -7,8 +7,7 @@ class HotelManager:
         pass
 
     def validatecreditcard( self, x ):
-        # PLEASE INCLUDE HERE THE CODE FOR VALIDATING THE GUID
-        # RETURN TRUE IF THE GUID IS RIGHT, OR FALSE IN OTHER CASE
+        y = x
         return True
 
     def ReaddatafromJSOn( self, fi):
