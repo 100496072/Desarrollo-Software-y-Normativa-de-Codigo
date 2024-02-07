@@ -8,7 +8,6 @@ class HotelManager:
         pass
 
     def validatecreditcard( self, x ):
-        Caracter = int(x[15])
         Suma = 0
         contador = 0
         while contador != 15:
@@ -17,16 +16,14 @@ class HotelManager:
                 if Resultado - 10 >= 0:
                     Suma += 1 + (Resultado - 10)
                 else:
-                    Suma += Resultado
+                    Suma += Resul
+                    tado
+
             else:
                 Suma += int(x[contador])
             contador += 1
 
-        Suma = Suma * 9
-        Digito = str(Suma)
-        Digito = int(Digito[-1])
-
-        if Digito == Caracter:
+        if int(str(Suma*9)[-1]) == int(x[15]):
             return True
         else:
             return False
