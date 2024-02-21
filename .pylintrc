@@ -179,7 +179,7 @@ docstring-min-length=-1
 # Naming style matching correct function names.
 # REGLA MODIFICADA
 #function-naming-style=snake_case
-function-naming-style=PascalCase
+function-naming-style=camelCase
 
 # Regular expression matching correct function names. Overrides function-
 # naming-style. If left empty, function names will be checked with the set
@@ -212,7 +212,7 @@ inlinevar-naming-style=any
 # Naming style matching correct method names.
 # REGLA MODIFICADA
 # method-naming-style=snake_case
-method-naming-style=PascalCase
+method-naming-style=camelCase
 
 # Regular expression matching correct method names. Overrides method-naming-
 # style. If left empty, method names will be checked with the set naming style.
@@ -353,7 +353,9 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=100
+# REGLA MODIFICADA
+# max-line-length=100
+max-line-length=120
 
 # Maximum number of lines in a module.
 max-module-lines=1000
