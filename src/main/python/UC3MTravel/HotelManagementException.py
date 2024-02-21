@@ -12,7 +12,8 @@ class HotelManagementException(Exception):
         """Hola"""
         return self.__message
 
-    @message.Setter
+
+    @message.setter
     def Message(self,value):
         """Hola"""
         self.__message = value
