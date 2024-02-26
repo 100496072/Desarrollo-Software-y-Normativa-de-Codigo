@@ -174,7 +174,9 @@ const-naming-style=UPPER_CASE
 
 # Minimum line length for functions/classes that require docstrings, shorter
 # ones are exempt.
-docstring-min-length=-1
+# REGLA MODIFICADA
+# docstring-min-length=-1
+docstring-min-length=10
 
 # Naming style matching correct function names.
 # REGLA MODIFICADA
@@ -256,7 +258,9 @@ variable-naming-style=PascalCase
 # Regular expression matching correct variable names. Overrides variable-
 # naming-style. If left empty, variable names will be checked with the set
 # naming style.
+# REGLA MODIFICADA
 #variable-rgx=
+variable-rgx=[a-zA-Z_][a-zA-Z0-9_]{1,}$
 
 
 [CLASSES]
@@ -293,12 +297,12 @@ exclude-too-few-public-methods=
 ignored-parents=
 
 # Maximum number of arguments for function / method.
-# REGLA CAMBIADA
+# REGLA MODIFICADA
 # max-args=5
 max-args=10
 
 # Maximum number of attributes for a class (see R0902).
-#REGLA CAMBIADA
+#REGLA MODIFICADA
 #max-attributes=7
 max-attributes=10
 
@@ -315,7 +319,7 @@ max-locals=15
 max-parents=7
 
 # Maximum number of public methods for a class (see R0904).
-#REGLA CAMBIADA
+#REGLA MODIFICADA
 #max-public-methods=20
 max-public-methods=25
 
@@ -326,7 +330,7 @@ max-returns=6
 max-statements=50
 
 # Minimum number of public methods for a class (see R0903).
-#REGLA CAMBIADA
+#REGLA MODIFICADA
 #min-public-methods=2
 min-public-methods=1
 
@@ -507,7 +511,7 @@ msg-template=
 #output-format=
 
 # Tells whether to display a full report or only the messages.
-# REGLA CAMBIADA
+# REGLA MODIFICADA
 # reports=no
 reports=yes
 
@@ -530,7 +534,10 @@ ignore-imports=yes
 ignore-signatures=yes
 
 # Minimum lines number of a similarity.
-min-similarity-lines=4
+# REGLA MODIFICADA
+# min-similarity-lines=4
+min-similarity-lines=3
+
 
 
 [SPELLING]
