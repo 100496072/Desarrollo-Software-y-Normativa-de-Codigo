@@ -3,6 +3,7 @@ import hashlib
 import json
 from datetime import datetime
 
+#je
 class HotelReservation:
     def __init__(self, IDCARD, creditcardNumb, nAMeAndSURNAME, phonenumber, room_type,numdays):
         self.__crEDITcardnumber = creditcardNumb
