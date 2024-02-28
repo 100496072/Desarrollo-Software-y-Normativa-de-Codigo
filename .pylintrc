@@ -631,6 +631,7 @@ signature-mutators=
 # you should avoid defining new builtins when possible.
 additional-builtins=
 
+
 # Tells whether unused global variables should be treated as a violation.
 # REGLA MODIFICADA
 # allow-global-unused-variables=yes
