@@ -3,8 +3,8 @@ from UC3MTravel import HotelManager
 
 def main():
     """Funcion Principal"""
-    Mng = HotelManager()
-    Res = Mng.ReadDataFromJSOn("test.json")
+    Mng = HotelManager.HotelManager()
+    Res = Mng.readDataFromJSOn("test.json")
     StrRes = str(Res)
     print(StrRes)
     print("CreditCard: " + Res.CREDITCARD)

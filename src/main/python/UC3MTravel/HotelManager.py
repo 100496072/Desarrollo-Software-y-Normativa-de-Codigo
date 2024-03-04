@@ -1,8 +1,8 @@
 """Comentario"""
 
 import json
-from .HotelManagementException import HotelManagementException
-from .HotelReservation import HotelReservation
+from HotelManagementException import HotelManagementException
+from HotelReservation import HotelReservation
 
 class HotelManager:
     """Comentario"""
@@ -30,7 +30,7 @@ class HotelManager:
     def readDataFromJSOn( self, fi):
         """Comentario"""
         try:
-            with open(fi) as af:
+            with open(fi, encoding='utf-8') as af:
                 DATA = json.load(af)
         except FileNotFoundError as ae:
             raise HotelManagementException("Wrong file or file path") from ae
@@ -41,7 +41,7 @@ class HotelManager:
         try:
             ac = DATA["CreditCard"]
             ap = DATA["phoneNumber"]
-            req = HotelReservation(IDCARD="12345678Z",creditcardNumb=ac,nAMeAndSURNAME="John Doe",
+            req = HotelReservation(idcard="12345678Z",creditcardnumb=ac,name_and_surname="John Doe",
                                    phonenumber=ap,room_type="single",numdays=3)
         except KeyError as ae:
             raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from ae
