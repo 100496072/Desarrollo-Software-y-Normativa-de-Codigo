@@ -37,7 +37,7 @@ from sys import version_info
 py3 = version_info[0] == 3
 py2 = not py3
 if py2:
-    FileNotFoundError = OSError
+    CustomFileNotFoundError = OSError
 
 
 def installPyb():
@@ -52,7 +52,7 @@ EXIT_CODE = 0
 
 try:
     subprocess.check_call(["pyb", "--version"])
-except FileNotFoundError as ae:
+except CustomFileNotFoundError as ae:
     if py3 or py2 and ae.errno == 2:
         installPyb()
     else:

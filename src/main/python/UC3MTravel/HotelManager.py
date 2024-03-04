@@ -1,8 +1,8 @@
 """Comentario"""
 
 import json
-from HotelManagementException import HotelManagementException
-from HotelReservation import HotelReservation
+from UC3MTravel import HotelManagementException
+from UC3MTravel import HotelReservation
 
 class HotelManager:
     """Comentario"""
@@ -33,20 +33,20 @@ class HotelManager:
             with open(fi, encoding='utf-8') as af:
                 DATA = json.load(af)
         except FileNotFoundError as ae:
-            raise HotelManagementException("Wrong file or file path") from ae
+            raise HotelManagementException.HotelManagementException("Wrong file or file path") from ae
         except json.JSONDecodeError as ae:
-            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ae
+            raise HotelManagementException.HotelManagementException("JSON Decode Error - Wrong JSON Format") from ae
 
 
         try:
             ac = DATA["CreditCard"]
             ap = DATA["phoneNumber"]
-            req = HotelReservation(idcard="12345678Z",creditcardnumb=ac,name_and_surname="John Doe",
-                                   phonenumber=ap,room_type="single",numdays=3)
+            req = HotelReservation.HotelReservation(idcard="12345678Z",creditcardnumb=ac,
+                                                            name_and_surname="John Doe",phonenumber=ap,room_type="single",numdays=3)
         except KeyError as ae:
-            raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from ae
+            raise HotelManagementException.HotelManagementException("JSON Decode Error - Invalid JSON Key") from ae
         if not self.validateCreditCard(ac):
-            raise HotelManagementException("Invalid credit card number")
+            raise HotelManagementException.HotelManagementException("Invalid credit card number")
 
         # Close the file
         return req

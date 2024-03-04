@@ -7,8 +7,8 @@ def main():
     Res = Mng.readDataFromJSOn("test.json")
     StrRes = str(Res)
     print(StrRes)
-    print("CreditCard: " + Res.CREDITCARD)
-    print(Res.LOCALIZER)
+    print("CreditCard: " + Res.idcard)
+    print(Res.localizer)
 
 if __name__ == "__main__":
     main()
