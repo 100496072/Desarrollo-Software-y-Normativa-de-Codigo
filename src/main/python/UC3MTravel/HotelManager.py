@@ -42,7 +42,7 @@ class HotelManager:
             ac = DATA["CreditCard"]
             ap = DATA["phoneNumber"]
             req = HotelReservation.HotelReservation(idcard="12345678Z",creditcardnumb=ac,
-                                                            name_and_surname="John Doe",phonenumber=ap,room_type="single",numdays=3)
+                    name_and_surname="John Doe",phonenumber=ap,room_type="single",numdays=3)
         except KeyError as ae:
             raise HotelManagementException.HotelManagementException("JSON Decode Error - Invalid JSON Key") from ae
         if not self.validateCreditCard(ac):
