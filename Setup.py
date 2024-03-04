@@ -1,3 +1,4 @@
+"""Comentario"""
 #!/usr/bin/env python
 #   -*- coding: utf-8 -*-
 #
@@ -39,28 +40,28 @@ if py2:
     FileNotFoundError = OSError
 
 
-def install_pyb():
+def installPyb():
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "pybuilder"])
-    except subprocess.CalledProcessError as e:
-        sys.exit(e.returncode)
+    except subprocess.CalledProcessError as ae:
+        sys.exit(ae.returncode)
 
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-exit_code = 0
+EXIT_CODE = 0
 
 try:
     subprocess.check_call(["pyb", "--version"])
-except FileNotFoundError as e:
-    if py3 or py2 and e.errno == 2:
-        install_pyb()
+except FileNotFoundError as ae:
+    if py3 or py2 and ae.errno == 2:
+        installPyb()
     else:
         raise
-except subprocess.CalledProcessError as e:
-    if e.returncode == 127:
-        install_pyb()
+except subprocess.CalledProcessError as ae:
+    if ae.returncode == 127:
+        installPyb()
     else:
-        sys.exit(e.returncode)
+        sys.exit(ae.returncode)
 
 try:
     from pybuilder.cli import main
@@ -69,8 +70,8 @@ try:
         raise RuntimeError("PyBuilder build failed")
 
     from pybuilder.reactor import Reactor
-    reactor = Reactor.current_instance()
-    project = reactor.project
+    REFACTOR = Reactor.current_instance()
+    project = REFACTOR.project
     dist_dir = project.expand_path("$dir_dist")
 
     for src_file in glob.glob(os.path.join(dist_dir, "*")):
@@ -83,7 +84,7 @@ try:
                 os.remove(target_file_name)
         shutil.move(src_file, script_dir)
     setup_args = sys.argv[1:]
-    subprocess.check_call([sys.executable, "setup.py"] + setup_args, cwd=script_dir)
-except subprocess.CalledProcessError as e:
-    exit_code = e.returncode
-sys.exit(exit_code)
+    subprocess.check_call([sys.executable, "Setup.py"] + setup_args, cwd=script_dir)
+except subprocess.CalledProcessError as ae:
+    EXIT_CODE = ae.returncode
+sys.exit(EXIT_CODE)

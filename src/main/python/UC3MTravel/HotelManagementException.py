@@ -1,4 +1,4 @@
-"""Hola"""
+"""Comentario"""
 
 class HotelManagementException(Exception):
     """Hola"""
@@ -14,6 +14,6 @@ class HotelManagementException(Exception):
 
 
     @message.setter
-    def Message(self,value):
+    def message(self,value):
         """Hola"""
         self.__message = value

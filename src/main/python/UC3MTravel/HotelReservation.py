@@ -1,16 +1,16 @@
-
+"""Comentario"""
 import hashlib
-import json
 from datetime import datetime
 
 #je
 class HotelReservation:
-    def __init__(self, IDCARD, creditcardNumb, nAMeAndSURNAME, phonenumber, room_type,numdays):
-        self.__crEDITcardnumber = creditcardNumb
-        self.__idcard = IDCARD
+    """Comentario"""
+    def __init__(self, idcard, creditcardnumb, name_and_surname, phonenumber, room_type,numdays):
+        self.__creditcardnumber = creditcardnumb
+        self.__idcard = idcard
         justnow = datetime.utcnow()
-        self.__ARRIVAL = datetime.timestamp(justnow)
-        self.__NAME_SURNAME = nAMeAndSURNAME
+        self.__arrival = datetime.timestamp(justnow)
+        self.__name_surname = name_and_surname
         self.__phonenumber = phonenumber
         self.__roomtype = room_type
         self.__num_days = numdays
@@ -19,30 +19,30 @@ class HotelReservation:
         """return a json string with the elements required to calculate the localizer"""
         #VERY IMPORTANT: JSON KEYS CANNOT BE RENAMED
         json_info = {"id_card": self.__idcard,
-                     "name_surname": self.__NAME_SURNAME,
-                     "credit_card": self.__crEDITcardnumber,
+                     "name_surname": self.__name_surname,
+                     "credit_card": self.__creditcardnumber,
                      "phone_number:": self.__phonenumber,
-                     "arrival_date": self.__ARRIVAL,
+                     "arrival_date": self.__arrival,
                      "num_days": self.__num_days,
                      "room_type": self.__roomtype,
                      }
         return "HotelReservation:" + json_info.__str__()
     @property
-    def CREDITCARD(self):
-        return self.__crEDITcardnumber
-    @CREDITCARD.setter
-    def CREDITCARD(self, value):
-        self.__crEDITcardnumber = value
+    def creditcard(self):
+        return self.__creditcardnumber
+    @creditcard.setter
+    def creditcard(self, value):
+        self.__creditcardnumber = value
 
     @property
-    def IDCARD(self):
+    def idcard(self):
         return self.__idcard
-    @IDCARD.setter
-    def IDCARD(self, value):
+    @idcard.setter
+    def idcard(self, value):
         self.__idcard = value
 
 
     @property
-    def LOCALIZER( self ):
+    def localizer( self ):
         """Returns the md5 signature"""
         return hashlib.md5(self.__str__().encode()).hexdigest()

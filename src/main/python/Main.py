@@ -1,7 +1,7 @@
 """"Parte 1 Ejercicio 2"""
 from UC3MTravel import HotelManager
 
-def Main():
+def main():
     """Funcion Principal"""
     Mng = HotelManager()
     Res = Mng.ReadDataFromJSOn("test.json")
@@ -11,5 +11,4 @@ def Main():
     print(Res.LOCALIZER)
 
 if __name__ == "__main__":
-    Main()
-
+    main()
