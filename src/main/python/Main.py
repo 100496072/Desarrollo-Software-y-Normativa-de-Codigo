@@ -1,9 +1,9 @@
 """"Parte 1 Ejercicio 2"""
-from UC3MTravel import HotelManager
+from UC3MTravel.HotelManager import HotelManager
 
 def main():
     """Funcion Principal"""
-    Mng = HotelManager.HotelManager()
+    Mng = HotelManager()
     Res = Mng.readDataFromJSOn("test.json")
     StrRes = str(Res)
     print(StrRes)

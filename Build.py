@@ -1,5 +1,4 @@
 #   -*- coding: utf-8 -*-
-"""Comentario"""
 from pybuilder.core import use_plugin, init
 
 use_plugin("python.core")
@@ -9,10 +8,10 @@ use_plugin("python.coverage")
 use_plugin("python.distutils")
 
 
-NAME = "G81.2024.T01.EG2"
-DEFAULT_TASK = "publish"
+name = "G81.2024.T01.EG2"
+default_task = "publish"
 
 
 @init
-def setProperties(project):
+def set_properties(project):
     pass

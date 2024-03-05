@@ -1,4 +1,3 @@
-"""Comentario"""
 #!/usr/bin/env python
 #   -*- coding: utf-8 -*-
 #
@@ -37,31 +36,31 @@ from sys import version_info
 py3 = version_info[0] == 3
 py2 = not py3
 if py2:
-    CustomFileNotFoundError = OSError
+    FileNotFoundError = OSError
 
 
-def installPyb():
+def install_pyb():
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "pybuilder"])
-    except subprocess.CalledProcessError as ae:
-        sys.exit(ae.returncode)
+    except subprocess.CalledProcessError as e:
+        sys.exit(e.returncode)
 
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-EXIT_CODE = 0
+exit_code = 0
 
 try:
     subprocess.check_call(["pyb", "--version"])
-except CustomFileNotFoundError as ae:
-    if py3 or py2 and ae.errno == 2:
-        installPyb()
+except FileNotFoundError as e:
+    if py3 or py2 and e.errno == 2:
+        install_pyb()
     else:
         raise
-except subprocess.CalledProcessError as ae:
-    if ae.returncode == 127:
-        installPyb()
+except subprocess.CalledProcessError as e:
+    if e.returncode == 127:
+        install_pyb()
     else:
-        sys.exit(ae.returncode)
+        sys.exit(e.returncode)
 
 try:
     from pybuilder.cli import main
@@ -70,8 +69,8 @@ try:
         raise RuntimeError("PyBuilder build failed")
 
     from pybuilder.reactor import Reactor
-    REFACTOR = Reactor.current_instance()
-    project = REFACTOR.project
+    reactor = Reactor.current_instance()
+    project = reactor.project
     dist_dir = project.expand_path("$dir_dist")
 
     for src_file in glob.glob(os.path.join(dist_dir, "*")):
@@ -84,7 +83,7 @@ try:
                 os.remove(target_file_name)
         shutil.move(src_file, script_dir)
     setup_args = sys.argv[1:]
-    subprocess.check_call([sys.executable, "Setup.py"] + setup_args, cwd=script_dir)
-except subprocess.CalledProcessError as ae:
-    EXIT_CODE = ae.returncode
-sys.exit(EXIT_CODE)
+    subprocess.check_call([sys.executable, "setup.py"] + setup_args, cwd=script_dir)
+except subprocess.CalledProcessError as e:
+    exit_code = e.returncode
+sys.exit(exit_code)
