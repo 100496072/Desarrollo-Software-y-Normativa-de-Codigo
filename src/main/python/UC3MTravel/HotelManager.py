@@ -9,7 +9,7 @@ class HotelManager:
     def __init__(self):
         pass
 
-    def validateCreditCard( self, x ):
+    def validateCreditCard(self, x):
         """Comentario"""
         Suma = 0
         Contador = 0
@@ -26,6 +26,22 @@ class HotelManager:
         if (Suma * 9) % 10 == int(x[15]):
             return True
         return False
+
+    """
+    def validateCreditCard(self, x):
+        Suma = 0
+        for i in range(len(x)):
+            digit = int(x[i])
+            if i % 2 == 0:  # Dígitos en posiciones impares
+                digit *= 2
+                if digit >= 10:
+                    digit = digit - 9  # Restar 9 si el resultado es mayor o igual a 10
+            Suma += digit
+
+        if Suma % 10 == 0:
+            return True
+        return False
+    """
 
     def readDataFromJSOn(self, fi):
         """Comentario"""
