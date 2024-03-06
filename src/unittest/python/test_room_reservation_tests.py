@@ -21,7 +21,7 @@ def testRoomReservtionTests(TestCase):
 
         my_manager = HotelManager()
         value = my_manager.roomReservation(idcard="12345678Z",creditcard="5555555555555555",
-                                           date_arrival="04/07/2024", name_and_surname="John Doe",phonenumber=ap,
+                                           date_arrival="04/07/2024", name_and_surname="John Doe",phonenumber="ap",
                                            room_type="single",numdays="2")
         self.assertEqual(value, "1")
 

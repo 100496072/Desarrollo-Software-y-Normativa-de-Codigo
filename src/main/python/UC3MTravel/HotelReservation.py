@@ -15,6 +15,7 @@ class HotelReservation:
         self.__reservation_date = datetime.timestamp(justnow)
         self.__roomtype = room_type
         self.__num_days = numdays
+        self.__localizer = hashlib.md5(self.__str__().encode()).hexdigest()
 
     def __str__(self):
         """return a json string with the elements required to calculate the localizer"""
@@ -47,7 +48,7 @@ class HotelReservation:
     @property
     def localizer( self ):
         """Returns the md5 signature"""
-        return hashlib.md5(self.__str__().encode()).hexdigest()
+        return self.__localizer
 
 
 
