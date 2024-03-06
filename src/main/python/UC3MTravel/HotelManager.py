@@ -1,8 +1,8 @@
 """Comentario"""
 
 import json
-from .HotelManagementException import HotelManagementException
-from .HotelReservation import HotelReservation
+from UC3MTravel import HotelManagementException
+from UC3MTravel import HotelReservation
 
 class HotelManager:
     """Comentario"""
