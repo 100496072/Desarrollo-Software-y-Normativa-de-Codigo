@@ -1,7 +1,7 @@
 
 """UNITTEST"""
 from unittest import TestCase
-from UC3MTravel.HotelManager import HotelManager
+from UC3MTravel import HotelManager
 class TestHotelManager(TestCase):
     """Comentario"""
     def setUp(self):

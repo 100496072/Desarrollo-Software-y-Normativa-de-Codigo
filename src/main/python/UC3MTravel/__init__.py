@@ -1,3 +1,5 @@
 """Hola"""
-#from src.main.python.UC3MTravel.HotelManagementException import HotelManagementException
-#from HotelManagementException import HotelManagementException
+from .HotelManagementException import HotelManagementException
+from .HotelManager import HotelManager
+from .HotelReservation import HotelReservation
+from .HotelStay import HotelStay
