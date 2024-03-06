@@ -8,8 +8,8 @@ class HotelManager:
     """Comentario"""
     def __init__(self):
         pass
-
     def validateCreditCard(self, x):
+        """Comentario"""
         suma = 0
         contador = 0
         while contador != 15:
@@ -25,24 +25,7 @@ class HotelManager:
 
         if (suma * 9) % 10 == int(x[15]):
             return True
-        else:
-            return False
-
-    """
-    def validateCreditCard(self, x):
-        Suma = 0
-        for i in range(len(x)):
-            digit = int(x[i])
-            if i % 2 == 0:  # Dígitos en posiciones impares
-                digit *= 2
-                if digit >= 10:
-                    digit = digit - 9  # Restar 9 si el resultado es mayor o igual a 10
-            Suma += digit
-
-        if Suma % 10 == 0:
-            return True
         return False
-    """
 
     def readDataFromJSOn(self, fi):
         """Comentario"""
@@ -58,8 +41,8 @@ class HotelManager:
         try:
             ac = DATA["CreditCard"]
             ap = DATA["phoneNumber"]
-            req = HotelReservation(idcard="12345678Z",creditcard=ac, name_and_surname="John Doe",phonenumber=ap,
-                                   room_type="single",numdays=3)
+            req = HotelReservation(idcard="12345678Z",creditcard=ac, date_arrival="date_arrival",
+                                   name_and_surname="John Doe",phonenumber=ap, room_type="single",numdays=3)
         except KeyError as ae:
             raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from ae
         if not self.validateCreditCard(ac):
@@ -70,7 +53,7 @@ class HotelManager:
 
     def roomReservation(self, idcard:str, creditcard:str,  date_arrival:str, name_and_surname:str,
                         phonenumber:str, room_type:str, numdays:str):
-
+        """Comentario"""
         #validar credit card
         self.validateCreditCard(creditcard)
         #validar idcard
