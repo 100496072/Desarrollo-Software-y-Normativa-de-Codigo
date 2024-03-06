@@ -5,13 +5,14 @@ from datetime import datetime
 #je
 class HotelReservation:
     """Comentario"""
-    def __init__(self, idcard, creditcardnumb, name_and_surname, phonenumber, room_type,numdays):
-        self.__creditcardnumber = creditcardnumb
+    def __init__(self, idcard, creditcard, date_arrival, name_and_surname, phonenumber, room_type,numdays):
         self.__idcard = idcard
+        self.__creditcard = creditcard
         justnow = datetime.utcnow()
-        self.__arrival = datetime.timestamp(justnow)
+        self.__arrival = date_arrival
         self.__name_surname = name_and_surname
         self.__phonenumber = phonenumber
+        self.__reservation_date = datetime.timestamp(justnow)
         self.__roomtype = room_type
         self.__num_days = numdays
 
@@ -19,12 +20,13 @@ class HotelReservation:
         """return a json string with the elements required to calculate the localizer"""
         #VERY IMPORTANT: JSON KEYS CANNOT BE RENAMED
         json_info = {"id_card": self.__idcard,
-                     "name_surname": self.__name_surname,
-                     "credit_card": self.__creditcardnumber,
-                     "phone_number:": self.__phonenumber,
+                     "credit_card": self.__creditcard,
                      "arrival_date": self.__arrival,
-                     "num_days": self.__num_days,
+                     "name_surname": self.__name_surname,
+                     "phone_number:": self.__phonenumber,
+                     "reservation_date": self.__reservation_date,
                      "room_type": self.__roomtype,
+                     "num_days": self.__num_days,
                      }
         return "HotelReservation:" + json_info.__str__()
     @property
@@ -45,4 +47,4 @@ class HotelReservation:
     @property
     def localizer( self ):
         """Returns the md5 signature"""
-        return hashlib.md5(str(self).encode()).hexdigest()
+        return hashlib.md5(self.__str__().encode()).hexdigest()

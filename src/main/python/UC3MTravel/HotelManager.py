@@ -57,8 +57,8 @@ class HotelManager:
         try:
             ac = DATA["CreditCard"]
             ap = DATA["phoneNumber"]
-            req = HotelReservation(idcard="12345678Z",creditcardnumb=ac,
-                    name_and_surname="John Doe",phonenumber=ap,room_type="single",numdays=3)
+            req = HotelReservation(idcard="12345678Z",creditcard=ac, name_and_surname="John Doe",phonenumber=ap,
+                                   room_type="single",numdays=3)
         except KeyError as ae:
             raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from ae
         if not self.validateCreditCard(ac):
@@ -66,3 +66,21 @@ class HotelManager:
 
         # Close the file
         return req
+
+    def roomReservation(self, idcard:str, creditcard:str,  date_arrival:str, name_and_surname:str,
+                        phonenumber:str, room_type:str, numdays:str):
+
+        #validar credit card
+        self.validateCreditCard(creditcard)
+        #validar idcard
+        #validad cada uno de los argumentos
+
+        my_reservation = HotelReservation(idcard=idcard, creditcard=creditcard, date_arrival=date_arrival,
+                                          name_and_surname=name_and_surname, phonenumber=phonenumber,
+                                          room_type=room_type, numdays=numdays)
+        #Instanciar hotel reservation
+        #llamo al metodo locaizer
+
+        #guardar los datos en un fichero almacen y comprobar que no estan repetidos
+
+        return my_reservation.localizer

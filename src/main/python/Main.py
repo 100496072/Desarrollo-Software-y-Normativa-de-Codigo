@@ -1,5 +1,5 @@
 """"Parte 1 Ejercicio 2"""
-from UC3MTravel.HotelManager import HotelManager
+from UC3MTravel import HotelManager
 
 def main():
     """Funcion Principal"""
