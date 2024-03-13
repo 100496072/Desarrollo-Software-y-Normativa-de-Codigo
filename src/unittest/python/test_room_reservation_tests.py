@@ -10,7 +10,9 @@ import json
 from UC3MTravel import HotelManager
 from UC3MTravel import HotelManagementException
 
-def testRoomReservtionTests(TestCase):
+
+
+class testRoomReservtionTests(TestCase):
     @freeze_time("01/07/2024")
 
     def test_room_reservation_valido1(self):
@@ -19,11 +21,11 @@ def testRoomReservtionTests(TestCase):
         if os.path.isfile(file_store):
             os.remove(file_store)
 
-        my_manager = HotelManager()
-        value = my_manager.roomReservation(idcard="12345678Z",creditcard="5555555555555555",
-                                           date_arrival="04/07/2024", name_and_surname="John Doe",phonenumber="ap",
-                                           room_type="single",numdays="2")
-        self.assertEqual(value, "1")
+        my_reservation = HotelManager()
+        value = my_reservation.roomReservation(idcard="12345678",creditcard="5105105105105100",
+                                           date_arrival="21/03/2024", name_and_surname="jose Lopez",
+                                           phonenumber="912345678", room_type="single",numdays="1")
+        self.assertEqual(value, "1234567890abcdef1234567890abcdef")
 
         with open(file_store, "r", encoding="utf-8", newline="") as file:
             data_list = json.load(file)
@@ -31,4 +33,5 @@ def testRoomReservtionTests(TestCase):
         for item in data_list:
             if item["_HotelReservation__idcard"] == "12345678":
                 found = True
+
         self.assertTrue(found)

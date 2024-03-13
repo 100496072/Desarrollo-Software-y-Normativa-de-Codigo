@@ -5,7 +5,7 @@ from datetime import datetime
 #je
 class HotelReservation:
     """Comentario"""
-    def __init__(self, idcard, creditcard, date_arrival, name_and_surname, phonenumber, room_type,numdays):
+    def __init__(self, idcard, creditcard, date_arrival, name_and_surname, phonenumber, room_type, numdays):
         self.__idcard = idcard
         self.__creditcard = creditcard
         justnow = datetime.utcnow()
@@ -30,6 +30,7 @@ class HotelReservation:
                      "num_days": self.__num_days,
                      }
         return "HotelReservation:" + json_info.__str__()
+
     @property
     def creditcard(self):
         return self.__creditcardnumber
