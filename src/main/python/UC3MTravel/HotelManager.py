@@ -1,29 +1,29 @@
 """Comentario"""
 
 import json
-from UC3MTravel import HotelManagementException
-from UC3MTravel import HotelReservation
+from .HotelManagementException import HotelManagementException
+from .HotelReservation import HotelReservation
 
 class HotelManager:
     """Comentario"""
     def __init__(self):
         pass
+
     def validateCreditCard(self, x):
         """Comentario"""
-        suma = 0
-        contador = 0
-        while contador != 15:
-            if contador % 2 == 0:
-                resultado = int(x[contador]) * 2
-                if resultado - 10 >= 0:
-                    suma += 1 + (resultado - 10)
+        Suma = 0
+        Contador = 0
+        for i in range(len(x) - 1):
+            if Contador % 2 == 0:
+                Resultado = int(x[i]) * 2
+                if Resultado >= 10:
+                    Suma += 1 + (Resultado - 10)
                 else:
-                    suma += resultado
+                    Suma += Resultado
             else:
-                suma += int(x[contador])
-            suma += 1
+                Suma += int(x[i])
 
-        if (suma * 9) % 10 == int(x[15]):
+        if (Suma * 9) % 10 == int(x[15]):
             return True
         return False
 
