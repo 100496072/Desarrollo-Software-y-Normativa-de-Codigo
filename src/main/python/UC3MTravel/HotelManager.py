@@ -30,8 +30,16 @@ class HotelManager:
 
     def validateIdcard(self, x):
         """Comentario"""
-        if 1 == 1:
-            return True
+        if len(x) == 9 and x[:-1].isdigit():
+
+            letras = "TRWAGMYFPDXBNJZSQVHLCKE"
+            numero = int(x[:-1])
+            letra = x[-1].upper()
+            letra_calculada = letras[numero % 23]
+
+            if letra == letra_calculada:
+                return True
+
         return False
 
     def validateNameSurname(self, x):
@@ -131,8 +139,8 @@ class HotelManager:
                                           room_type=room_type, numdays=numdays)
 
         #Llamo la ruta del fichero almacén, donde almacenaremos todas las reservas
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
-        file_store = JSON_FILES_PATH + "store_reservation.json"
+        JSON_FILES_PATH = str(Path.home()) + "\PycharmProjects\G81.2024.T01.EG2\src\JsonFiles"
+        file_store = JSON_FILES_PATH + "\store_reservation.json"
 
         # Comprobamos que dicho fichero existe
         try:
@@ -143,6 +151,15 @@ class HotelManager:
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format")
         # Guardar los datos en un fichero almacen y comprobar que no están repetidos
+
+        data_list.append(my_reservation.__dict__)
+
+        try:
+            with open(file_store, "w", encoding="utf-8", newline="") as file:
+                json.dump(data_list, file, indent=2)
+        except FileNotFoundError as ex:
+            raise HotelManagementException("Wrong file or file path")
+
 
         # Guardar la reserva en el fichero almacén
         # Devolver el localizador de la reserva
