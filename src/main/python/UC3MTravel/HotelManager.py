@@ -12,9 +12,8 @@ class HotelManager:
     def validateCreditCard(self, x):
         """Comentario"""
         Suma = 0
-        Contador = 0
         for i in range(len(x) - 1):
-            if Contador % 2 == 0:
+            if i % 2 == 0:
                 Resultado = int(x[i]) * 2
                 if Resultado >= 10:
                     Suma += 1 + (Resultado - 10)

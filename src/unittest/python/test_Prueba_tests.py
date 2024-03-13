@@ -15,13 +15,13 @@ class TestHotelManager(TestCase):
 
     def test_valid_credit_card2(self):
         # Una tarjeta válida
-        valid_card2 = "4165980063615385"
+        valid_card2 = "4008641178791526"
         self.assertTrue(HotelManager.validateCreditCard(self, valid_card2))
         print("Test 2 OK")
 
     def test_valid_credit_card3(self):
         # Una tarjeta no válida
-        valid_card3 = "4165980063615385"
+        valid_card3 = "4003209683263426"
         self.assertTrue(HotelManager.validateCreditCard(self, valid_card3))
         print("Test 3 OK")
 
