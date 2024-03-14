@@ -3,7 +3,7 @@ import hashlib
 from datetime import datetime
 
 #je
-class HotelReservation:
+class HotelReservation():
     """Comentario"""
     def __init__(self, idcard, creditcard, date_arrival, name_and_surname, phonenumber, room_type, numdays):
         self.__idcard = idcard

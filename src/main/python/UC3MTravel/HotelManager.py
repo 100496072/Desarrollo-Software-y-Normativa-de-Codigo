@@ -3,8 +3,9 @@
 import json
 from pathlib import Path
 from datetime import datetime
-from .HotelManagementException import HotelManagementException
-from .HotelReservation import HotelReservation
+from UC3MTravel import HotelManagementException
+from UC3MTravel.HotelReservation import HotelReservation
+
 
 class HotelManager:
     """Comentario"""
@@ -13,23 +14,35 @@ class HotelManager:
 
     def validateCreditCard(self, x):
         """Comentario"""
-        Suma = 0
-        for i in range(len(x) - 1):
-            if i % 2 == 0:
-                Resultado = int(x[i]) * 2
-                if Resultado >= 10:
-                    Suma += 1 + (Resultado - 10)
+        if type(x) is not str:
+            raise HotelManagementException("El número de tarjeta recibido no es válido o no tiene un formato válido.")
+        if len(x) == 16:
+            Suma = 0
+            for i in range(len(x) - 1):
+                if not x[i].isdigit():
+                    raise HotelManagementException(
+                        "El número de tarjeta recibido no es válido o no tiene un formato válido.")
+                if i % 2 == 0:
+                    Resultado = int(x[i]) * 2
+                    if Resultado >= 10:
+                        Suma += 1 + (Resultado - 10)
+                    else:
+                        Suma += Resultado
                 else:
-                    Suma += Resultado
+                    Suma += int(x[i])
+            if x[15].isdigit() and (Suma * 9) % 10 == int(x[15]):
+                return None
             else:
-                Suma += int(x[i])
-
-        if (Suma * 9) % 10 == int(x[15]):
-            return True
-        return False
+                raise HotelManagementException(
+                    "El número de tarjeta recibido no es válido o no tiene un formato válido.")
+        else:
+            raise HotelManagementException("El número de tarjeta recibido no es válido o no tiene un formato válido.")
 
     def validateIdcard(self, x):
         """Comentario"""
+
+        if type(x) is not str:
+            raise HotelManagementException("El DNI no es válido.")
         if len(x) == 9 and x[:-1].isdigit():
 
             letras = "TRWAGMYFPDXBNJZSQVHLCKE"
@@ -37,60 +50,50 @@ class HotelManager:
             letra = x[-1].upper()
             letra_calculada = letras[numero % 23]
 
-            if letra == letra_calculada:
-                return True
-
-        return False
+            if letra != letra_calculada:
+                raise HotelManagementException("El DNI no es válido.")
+        else:
+            raise HotelManagementException("El DNI no es válido.")
 
     def validateNameSurname(self, x):
         """Comentario"""
+        if type(x) is not str:
+            raise HotelManagementException("La cadena del nombre y apellidos no es válida.")
         if len(x) >= 0 and len(x) <= 50:
             separacion = x.split()
-            if len(separacion) >= 2:
-                return True
-        return False
+            if len(separacion) < 2:
+                raise HotelManagementException("La cadena del nombre y apellidos no es válida.")
+        else:
+            raise HotelManagementException("La cadena del nombre y apellidos no es válida.")
 
     def validatePhoneNumber(self, x):
         """Comentario"""
-        if len(x) == 9:
-            return True
-        return False
+        if type(x) is not str:
+            raise HotelManagementException("El número de teléfono no es válido.")
+        if len(x) != 9:
+            raise HotelManagementException("El número de teléfono no es válido.")
 
     def validateRoomType(self, x):
         """Comentario"""
-        if x == "single" or "double" or "suite":
-            return True
-        return False
+        if x != "single" and "double" and "suite":
+            raise HotelManagementException("El tipo de habitación no es válido.")
 
     def validateArrival(self, x):
         """Comentario"""
+        if type(x) is not str:
+            raise HotelManagementException("La fecha de entrada no es válida")
         try:
             datetime.strptime(x, "%d/%m/%Y")
-            return True
         except ValueError:
-            return False
+            raise HotelManagementException("La fecha de entrada no es válida")
 
     def validateNumDays(self, x):
         """Comentario"""
-        if int(x) >= 1 and int(x) <= 10:
-            return True
-        return False
+        if type(x) is not str:
+            raise HotelManagementException("El número de días no es válido.")
+        if int(x) < 1 or int(x) > 10:
+            raise HotelManagementException("El número de días no es válido.")
 
-    def verificacion(self, creditcard, idcard, name_and_surname, phonenumber, room_type, date_arrival, numdays):
-        if not creditcard:
-            raise ValueError("El número de tarjeta recibido no es válido o no tiene un formato válido.")
-        if not idcard:
-            raise ValueError("El DNI no es válido.")
-        if not name_and_surname:
-            raise ValueError("La cadena del nombre y apellidos no es válida.")
-        if not phonenumber:
-            raise ValueError("El número de teléfono no es válido.")
-        if not room_type:
-            raise ValueError("El tipo de habitación no es válido.")
-        if not date_arrival:
-            raise ValueError("La fecha de entrada no es válida")
-        if not numdays:
-            raise ValueError("El número de días no es válido.")
 
     def readDataFromJSOn(self, fi):
         """Comentario"""
@@ -118,29 +121,26 @@ class HotelManager:
     def roomReservation(self, idcard:str, creditcard:str,  date_arrival:str, name_and_surname:str,
                         phonenumber:str, room_type:str, numdays:str):
         """Comentario"""
-        validecreditcard = self.validateCreditCard(creditcard)
-        valideidtcard = self.validateIdcard(idcard)
-        validenamesurname = self.validateNameSurname(name_and_surname)
-        validephonenumber = self.validatePhoneNumber(phonenumber)
-        valideroomtype = self.validateRoomType(room_type)
-        validearrival = self.validateArrival(date_arrival)
-        validenumdays = self.validateNumDays(numdays)
 
         try:
-            self.verificacion(validecreditcard, valideidtcard, validenamesurname, validephonenumber, valideroomtype,
-                              validearrival, validenumdays)
+            self.validateCreditCard(creditcard)
+            self.validateIdcard(idcard)
+            self.validateArrival(date_arrival)
+            self.validateNameSurname(name_and_surname)
+            self.validatePhoneNumber(phonenumber)
+            self.validateRoomType(room_type)
+            self.validateNumDays(numdays)
+
         except ValueError as e:
             print({e})
-
-
 
         my_reservation = HotelReservation(idcard=idcard, creditcard=creditcard, date_arrival=date_arrival,
                                           name_and_surname=name_and_surname, phonenumber=phonenumber,
                                           room_type=room_type, numdays=numdays)
 
         #Llamo la ruta del fichero almacén, donde almacenaremos todas las reservas
-        JSON_FILES_PATH = str(Path.home()) + "\PycharmProjects\G81.2024.T01.EG2\src\JsonFiles"
-        file_store = JSON_FILES_PATH + "\store_reservation.json"
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_reservation.json"
 
         # Comprobamos que dicho fichero existe
         try:
@@ -161,6 +161,4 @@ class HotelManager:
             raise HotelManagementException("Wrong file or file path")
 
 
-        # Guardar la reserva en el fichero almacén
-        # Devolver el localizador de la reserva
         return my_reservation.localizer
