@@ -152,7 +152,12 @@ class HotelManager:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format")
         # Guardar los datos en un fichero almacen y comprobar que no están repetidos
 
-        data_list.append(my_reservation.__dict__)
+
+        for item in data_list:
+            if item["_HotelReservation__idcard"] == idcard:
+                raise HotelManagementException("El cliente ya tenía una reserva.")
+        else:
+            data_list.append(my_reservation.__dict__)
 
         try:
             with open(file_store, "w", encoding="utf-8", newline="") as file:
