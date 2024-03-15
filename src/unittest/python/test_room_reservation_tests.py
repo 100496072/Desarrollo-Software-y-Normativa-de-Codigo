@@ -14,16 +14,14 @@ from UC3MTravel import HotelManagementException
 
 class testRoomReservtionTests(TestCase):
 
-    JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
-    file_store = JSON_FILES_PATH + "store_reservation.json"
-    if os.path.isfile(file_store):
-        os.remove(file_store)
+
     @freeze_time("01/07/2024")
-    def test_room_reservation_1(self):
+    def test_room_reservation_valide_1(self):
 
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
-
+        if os.path.isfile(file_store):
+            os.remove(file_store)
 
         my_reservation = HotelManager()
         value = my_reservation.roomReservation(idcard="02564364W",creditcard="5105105105105100",
@@ -39,12 +37,14 @@ class testRoomReservtionTests(TestCase):
                 found = True
 
         self.assertTrue(found)
-        print("Test 1 OK")
+        print("Test Valido 1 OK")
 
     @freeze_time("01/07/2024")
-    def test_room_reservation_2(self):
+    def test_room_reservation_valide_2(self):
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
 
 
         my_reservation = HotelManager()
@@ -61,10 +61,22 @@ class testRoomReservtionTests(TestCase):
                 found = True
 
         self.assertTrue(found)
-        print("Test 2 OK")
+        print("Test Valido 2 OK")
 
 
-    def test_room_reservation_3(self):
+    @freeze_time("01/07/2024")
+    def test_room_reservation_notvalide_1(self):
+
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_reservation.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        my_reservation = HotelManager()
+        my_reservation.roomReservation(idcard="02564364W", creditcard="5105105105105100",
+                                               date_arrival="21/03/2024", name_and_surname="jose Lopez",
+                                               phonenumber="912345678", room_type="single", numdays="1")
 
         my_reservation = HotelManager()
 
@@ -74,9 +86,19 @@ class testRoomReservtionTests(TestCase):
                                                    phonenumber="912345678", room_type="single", numdays="1")
 
         self.assertEqual(error.exception.message, "El cliente ya tenía una reserva.")
-        print("Test 3 OK")
+        print("Test No Valido 1 OK")
 
-    def test_room_reservation_4(self):
+    @freeze_time("01/07/2024")
+    def test_room_reservation_notvalide_2(self):
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_reservation.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        my_reservation = HotelManager()
+        my_reservation.roomReservation(idcard="31427936T", creditcard="5105105105105100",
+                                               date_arrival="21/03/2025", name_and_surname="jose Lopez",
+                                               phonenumber="912345678", room_type="single", numdays="1")
 
         my_reservation = HotelManager()
 
@@ -86,10 +108,10 @@ class testRoomReservtionTests(TestCase):
                                                    phonenumber="912345678", room_type="single", numdays="1")
 
         self.assertEqual(error.exception.message, "El cliente ya tenía una reserva.")
-        print("Test 4 OK")
+        print("Test No Valido 2 OK")
 
-
-    def test_room_reservation_5(self):
+    @freeze_time("01/07/2024")
+    def test_room_reservation_notvalide_3(self):
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -105,4 +127,4 @@ class testRoomReservtionTests(TestCase):
         self.assertEqual(error.exception.message, "El número de tarjeta recibido no es válido o no tiene"
                                                   " un formato válido.")
 
-        print("Test 5 OK")
+        print("Test No Valido 3 OK")
