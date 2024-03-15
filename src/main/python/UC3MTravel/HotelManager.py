@@ -73,7 +73,7 @@ class HotelManager:
 
     def validateRoomType(self, x):
         """Comentario"""
-        if x != "single" and "double" and "suite":
+        if x not in ("single", "double", "suite"):
             raise HotelManagementException("El tipo de habitación no es válido.")
 
     def validateArrival(self, x):
