@@ -50,6 +50,3 @@ class HotelReservation():
     def localizer( self ):
         """Returns the md5 signature"""
         return self.__localizer
-
-
-

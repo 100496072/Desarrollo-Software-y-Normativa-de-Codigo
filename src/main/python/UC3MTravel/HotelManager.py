@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 from UC3MTravel import HotelManagementException
-from UC3MTravel.HotelReservation import HotelReservation
+from UC3MTravel import HotelReservation
 
 
 class HotelManager:
@@ -32,11 +32,9 @@ class HotelManager:
                     Suma += int(x[i])
             if x[15].isdigit() and (Suma * 9) % 10 == int(x[15]):
                 return None
-            else:
-                raise HotelManagementException(
+            raise HotelManagementException(
                     "El número de tarjeta recibido no es válido o no tiene un formato válido.")
-        else:
-            raise HotelManagementException("El número de tarjeta recibido no es válido o no tiene un formato válido.")
+        raise HotelManagementException("El número de tarjeta recibido no es válido o no tiene un formato válido.")
 
     def validateIdcard(self, x):
         """Comentario"""
@@ -84,8 +82,8 @@ class HotelManager:
             raise HotelManagementException("La fecha de entrada no es válida")
         try:
             datetime.strptime(x, "%d/%m/%Y")
-        except ValueError:
-            raise HotelManagementException("La fecha de entrada no es válida")
+        except ValueError as exc:
+            raise HotelManagementException("La fecha de entrada no es válida") from exc
 
     def validateNumDays(self, x):
         """Comentario"""
@@ -131,10 +129,11 @@ class HotelManager:
             self.validateRoomType(room_type)
             self.validateNumDays(numdays)
 
-        except ValueError as e:
-            print({e})
+        except ValueError as eA:
+            print({eA})
 
-        my_reservation = HotelReservation(idcard=idcard, creditcard=creditcard, date_arrival=date_arrival,
+        my_reservation = HotelReservation.HotelReservation(idcard=idcard, creditcard=creditcard,
+                                                         date_arrival=date_arrival,
                                           name_and_surname=name_and_surname, phonenumber=phonenumber,
                                           room_type=room_type, numdays=numdays)
 
@@ -146,24 +145,23 @@ class HotelManager:
         try:
             with open(file_store, "r", encoding="utf-8", newline="") as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             data_list = []
         except json.JSONDecodeError as ex:
-            raise HotelManagementException("JSON Decode Error - Wrong JSON Format")
+            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
         # Guardar los datos en un fichero almacen y comprobar que no están repetidos
 
 
         for item in data_list:
             if item["_HotelReservation__idcard"] == idcard:
                 raise HotelManagementException("El cliente ya tenía una reserva.")
-        else:
-            data_list.append(my_reservation.__dict__)
+        data_list.append(my_reservation.__dict__)
 
         try:
             with open(file_store, "w", encoding="utf-8", newline="") as file:
                 json.dump(data_list, file, indent=2)
         except FileNotFoundError as ex:
-            raise HotelManagementException("Wrong file or file path")
+            raise HotelManagementException("Wrong file or file path") from ex
 
 
         return my_reservation.localizer
