@@ -6,15 +6,10 @@ from freezegun import freeze_time
 from pathlib import Path
 import os
 import json
-
 from UC3MTravel import HotelManager
 from UC3MTravel import HotelManagementException
 
-
-
 class testRoomReservtionTests(TestCase):
-
-
     @freeze_time("01/07/2024")
     def test_room_reservation_valide_1(self):
 
@@ -25,8 +20,8 @@ class testRoomReservtionTests(TestCase):
 
         my_reservation = HotelManager()
         value = my_reservation.roomReservation(idcard="02564364W",creditcard="5105105105105100",
-                                           date_arrival="21/03/2024", name_and_surname="jose Lopez",
-                                           phonenumber="912345678", room_type="single",numdays="1")
+                                           date_arrival="20/6/2024", name_and_surname="Luisa Gómez",
+                                           phonenumber="912345678", room_type="SUITE",numdays="9")
         self.assertEqual(value, "dff22d19bfc3e273a34d6e8a81b3296e")
 
         with open(file_store, "r", encoding="utf-8", newline="") as file:
@@ -49,8 +44,8 @@ class testRoomReservtionTests(TestCase):
 
         my_reservation = HotelManager()
         value = my_reservation.roomReservation(idcard="31427936T",creditcard="5105105105105100",
-                                           date_arrival="21/03/2025", name_and_surname="jose Lopez",
-                                           phonenumber="912345678", room_type="single",numdays="1")
+                                           date_arrival="14/6/2024", name_and_surname="JOSE LOPEZ SANCHEZ",
+                                           phonenumber="912345678", room_type="SINGLE",numdays="10")
         self.assertEqual(value, "07d98b3b39afabde7157be6196d8e90c")
 
         with open(file_store, "r", encoding="utf-8", newline="") as file:
