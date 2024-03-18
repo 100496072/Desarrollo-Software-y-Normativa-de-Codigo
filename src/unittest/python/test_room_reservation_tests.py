@@ -180,6 +180,7 @@ class testRoomReservtionTests(TestCase):
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
+
             os.remove(file_store)
 
         my_reservation = HotelManager()
