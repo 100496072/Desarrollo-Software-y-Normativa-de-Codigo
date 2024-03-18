@@ -1,6 +1,7 @@
 """Comentario"""
 
 import json
+import re
 from pathlib import Path
 from datetime import datetime
 from UC3MTravel import HotelManagementException
@@ -9,6 +10,7 @@ from UC3MTravel import HotelReservation
 
 class HotelManager:
     """Comentario"""
+
     def __init__(self):
         pass
 
@@ -33,7 +35,7 @@ class HotelManager:
             if x[15].isdigit() and (Suma * 9) % 10 == int(x[15]):
                 return None
             raise HotelManagementException(
-                    "El número de tarjeta recibido no es válido o no tiene un formato válido.")
+                "El número de tarjeta recibido no es válido o no tiene un formato válido.")
         raise HotelManagementException("El número de tarjeta recibido no es válido o no tiene un formato válido.")
 
     def validateIdcard(self, x):
@@ -92,7 +94,6 @@ class HotelManager:
         if int(x) < 1 or int(x) > 10:
             raise HotelManagementException("El número de días no es válido.")
 
-
     def readDataFromJSOn(self, fi):
         """Comentario"""
         try:
@@ -106,8 +107,8 @@ class HotelManager:
         try:
             ac = DATA["CreditCard"]
             ap = DATA["phoneNumber"]
-            req = HotelReservation(idcard="12345678Z",creditcard=ac, date_arrival="date_arrival",
-                                   name_and_surname="John Doe",phonenumber=ap, room_type="single",numdays=3)
+            req = HotelReservation(idcard="12345678Z", creditcard=ac, date_arrival="date_arrival",
+                                   name_and_surname="John Doe", phonenumber=ap, room_type="single", numdays=3)
         except KeyError as ae:
             raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from ae
         if not self.validateCreditCard(ac):
@@ -116,8 +117,8 @@ class HotelManager:
         # Close the file
         return req
 
-    def roomReservation(self, idcard:str, creditcard:str,  date_arrival:str, name_and_surname:str,
-                        phonenumber:str, room_type:str, numdays:str):
+    def roomReservation(self, idcard: str, creditcard: str, date_arrival: str, name_and_surname: str,
+                        phonenumber: str, room_type: str, numdays: str):
         """Comentario"""
 
         try:
@@ -133,11 +134,11 @@ class HotelManager:
             print({eA})
 
         my_reservation = HotelReservation.HotelReservation(idcard=idcard, creditcard=creditcard,
-                                                         date_arrival=date_arrival,
-                                          name_and_surname=name_and_surname, phonenumber=phonenumber,
-                                          room_type=room_type, numdays=numdays)
+                                                           date_arrival=date_arrival,
+                                                           name_and_surname=name_and_surname, phonenumber=phonenumber,
+                                                           room_type=room_type, numdays=numdays)
 
-        #Llamo la ruta del fichero almacén, donde almacenaremos todas las reservas
+        # Llamo la ruta del fichero almacén, donde almacenaremos todas las reservas
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
 
@@ -151,7 +152,6 @@ class HotelManager:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
         # Guardar los datos en un fichero almacen y comprobar que no están repetidos
 
-
         for item in data_list:
             if item["_HotelReservation__idcard"] == idcard:
                 raise HotelManagementException("El cliente ya tenía una reserva.")
@@ -163,5 +163,54 @@ class HotelManager:
         except FileNotFoundError as ex:
             raise HotelManagementException("Wrong file or file path") from ex
 
-
         return my_reservation.localizer
+
+    def guest_arrival(self, input_file: json):
+        try:
+            with open(input_file, "r", encoding="utf-8", newline="") as file:
+                input_data = json.load(file)
+        except FileNotFoundError:
+            input_data = []
+        except json.JSONDecodeError as ex:
+            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
+
+        for item in input_data:
+            if item[0] != "Localizer":
+                raise HotelManagementException("El JSON notiene la estructura esperada")
+            if item[1] != "IdCard":
+                raise HotelManagementException("El JSON notiene la estructura esperada")
+            regex_pattern = re.compile("[0-9, A-Z]{32}")
+            valid_regex_patter_localizer = regex_pattern.fullmatch(item["Localizer"])
+            if valid_regex_patter_localizer is None:
+                raise HotelManagementException("El JSON notiene la estructura esperada")
+
+            regex_pattern = re.compile("[0-9]{8}[A-Z]")
+            valid_regex_patter_localizer = regex_pattern.fullmatch(item["IdCard"])
+            if valid_regex_patter_localizer is None:
+                raise HotelManagementException("El JSON notiene la estructura esperada")
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_reservation.json"
+
+        try:
+            with open(file_store, "r", encoding="utf-8", newline="") as file:
+                data_list = json.load(file)
+        except FileNotFoundError:
+            data_list = []
+        except json.JSONDecodeError as ex:
+            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
+
+        for loc in input_data:
+            found = False
+            for search in data_list:
+                if loc["Localizer"] == search["_HotelReservation__localizer"]:
+                    found = True
+            if not found:
+                raise HotelManagementException("El localizador no se corresponde con los datos almacenados")
+            for element in data_list:
+                if element["_HotelReservation__localizer"] != self.roomReservation(element["_HotelReservation__idcard"],
+                                                                                   element["_HotelReservation__creditcard"],
+                             element["_HotelReservation__arrival"], element["_HotelReservation__name_surname"],
+                             element["_HotelReservation__phonenumber"], element["_HotelReservation__roomtype"],
+                             element["_HotelReservation__num_days"]):
+                    raise HotelManagementException("El localizador no se corresponde con los datos almacenados.")
