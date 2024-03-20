@@ -6,6 +6,7 @@ from pathlib import Path
 from datetime import datetime
 from UC3MTravel import HotelManagementException
 from UC3MTravel import HotelReservation
+from UC3MTravel import HotelStay
 
 
 class HotelManager:
@@ -169,23 +170,29 @@ class HotelManager:
         try:
             with open(input_file, "r", encoding="utf-8", newline="") as file:
                 input_data = json.load(file)
-        except FileNotFoundError:
-            input_data = []
+        except FileExistsError:
+            input_data = {}
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
 
         for item in input_data:
-            if item[0] != "Localizer":
+            claves = iter(input_data.keys())
+            primera_clave = next(claves)
+            print(primera_clave)
+            if primera_clave != "Localizer":
+                print(item[0])
                 raise HotelManagementException("El JSON notiene la estructura esperada")
-            if item[1] != "IdCard":
+            segunda_clave = next(claves)
+            if segunda_clave != "IdCard":
                 raise HotelManagementException("El JSON notiene la estructura esperada")
-            regex_pattern = re.compile("[0-9, A-Z]{32}")
-            valid_regex_patter_localizer = regex_pattern.fullmatch(item["Localizer"])
+            regex_pattern = re.compile("[0-9, a-z]{32}")
+            valid_regex_patter_localizer = regex_pattern.fullmatch(input_data[primera_clave])
+            print(input_data[primera_clave])
             if valid_regex_patter_localizer is None:
                 raise HotelManagementException("El JSON notiene la estructura esperada")
 
             regex_pattern = re.compile("[0-9]{8}[A-Z]")
-            valid_regex_patter_localizer = regex_pattern.fullmatch(item["IdCard"])
+            valid_regex_patter_localizer = regex_pattern.fullmatch(input_data[segunda_clave])
             if valid_regex_patter_localizer is None:
                 raise HotelManagementException("El JSON notiene la estructura esperada")
 
@@ -200,17 +207,17 @@ class HotelManager:
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
 
-        for loc in input_data:
+        #Hay que poner esto como un while
+        for search in data_list:
             found = False
-            for search in data_list:
-                if loc["Localizer"] == search["_HotelReservation__localizer"]:
-                    found = True
+            if input_data[primera_clave] == search["_HotelReservation__localizer"]:
+                found = True
+                reservation = search
             if not found:
                 raise HotelManagementException("El localizador no se corresponde con los datos almacenados")
-            for element in data_list:
-                if element["_HotelReservation__localizer"] != self.roomReservation(element["_HotelReservation__idcard"],
-                                                                                   element["_HotelReservation__creditcard"],
-                             element["_HotelReservation__arrival"], element["_HotelReservation__name_surname"],
-                             element["_HotelReservation__phonenumber"], element["_HotelReservation__roomtype"],
-                             element["_HotelReservation__num_days"]):
-                    raise HotelManagementException("El localizador no se corresponde con los datos almacenados.")
+
+        my_room = HotelStay(reservation["_HotelReservation__idcard"], reservation["_HotelReservation__localizer"],
+                            reservation["_HotelReservation__num_days"], reservation["_HotelReservation__roomtype"])
+
+
+
