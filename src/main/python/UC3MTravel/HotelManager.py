@@ -178,16 +178,13 @@ class HotelManager:
         for item in input_data:
             claves = iter(input_data.keys())
             primera_clave = next(claves)
-            print(primera_clave)
             if primera_clave != "Localizer":
-                print(item[0])
                 raise HotelManagementException("El JSON notiene la estructura esperada")
             segunda_clave = next(claves)
             if segunda_clave != "IdCard":
                 raise HotelManagementException("El JSON notiene la estructura esperada")
             regex_pattern = re.compile("[0-9, a-z]{32}")
             valid_regex_patter_localizer = regex_pattern.fullmatch(input_data[primera_clave])
-            print(input_data[primera_clave])
             if valid_regex_patter_localizer is None:
                 raise HotelManagementException("El JSON notiene la estructura esperada")
 
@@ -216,8 +213,7 @@ class HotelManager:
             if not found:
                 raise HotelManagementException("El localizador no se corresponde con los datos almacenados")
 
-        my_room = HotelStay(reservation["_HotelReservation__idcard"], reservation["_HotelReservation__localizer"],
+        my_room = HotelStay.HotelStay(reservation["_HotelReservation__idcard"], reservation["_HotelReservation__localizer"],
                             reservation["_HotelReservation__num_days"], reservation["_HotelReservation__roomtype"])
 
-
-
+        return my_room.room_key

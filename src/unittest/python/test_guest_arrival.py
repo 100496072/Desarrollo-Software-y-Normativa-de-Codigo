@@ -30,4 +30,6 @@ class TestGuestArrival(TestCase):
         my_hotelroom = HotelManager()
         room_key=my_hotelroom.guest_arrival(input_file= file_store)
 
-        self.assertEqual(room_key, "00000000000001")
+        self.assertEqual("639493603b7794ae1d633bd1b592a45455d192987a7001d0670a237b5a5af97a", room_key)
+
+
