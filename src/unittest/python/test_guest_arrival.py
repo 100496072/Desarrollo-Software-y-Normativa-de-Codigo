@@ -32,4 +32,27 @@ class TestGuestArrival(TestCase):
 
         self.assertEqual("639493603b7794ae1d633bd1b592a45455d192987a7001d0670a237b5a5af97a", room_key)
 
+    @freeze_time("01/07/2024")
+    def test_guest_arrival_dup_1(self):
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_reservation.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
 
+        my_reservation = HotelManager()
+        my_reservation.roomReservation(idcard="02564364W", creditcard="5105105105105100",
+                                       date_arrival="14/6/2024", name_and_surname="JOSE LOPEZ",
+                                       phonenumber="912345678", room_type="SINGLE", numdays="1")
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_arrival.json"
+
+        my_hotelroom = HotelManager()
+        room_key = my_hotelroom.guest_arrival(input_file=file_store)
+
+        with self.assertRaises(HotelManagementException) as error:
+            my_reservation.roomReservation(idcard="02564364W", creditcard="5105105105105100",
+                                           date_arrival="21/03/2024", name_and_surname="jose Lopez",
+                                           phonenumber="912345678", room_type="single", numdays="1")
+
+        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")

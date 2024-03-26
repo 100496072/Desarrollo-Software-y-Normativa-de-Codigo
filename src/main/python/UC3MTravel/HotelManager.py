@@ -174,24 +174,26 @@ class HotelManager:
             input_data = {}
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
-
+        print(input_data)
+        if len(input_data) == 0:
+            raise HotelManagementException("El JSON no tiene la estructura esperada")
         for item in input_data:
             claves = iter(input_data.keys())
             primera_clave = next(claves)
             if primera_clave != "Localizer":
-                raise HotelManagementException("El JSON notiene la estructura esperada")
+                raise HotelManagementException("El JSON no tiene la estructura esperada")
             segunda_clave = next(claves)
             if segunda_clave != "IdCard":
-                raise HotelManagementException("El JSON notiene la estructura esperada")
+                raise HotelManagementException("El JSON no tiene la estructura esperada")
             regex_pattern = re.compile("[0-9, a-z]{32}")
             valid_regex_patter_localizer = regex_pattern.fullmatch(input_data[primera_clave])
             if valid_regex_patter_localizer is None:
-                raise HotelManagementException("El JSON notiene la estructura esperada")
+                raise HotelManagementException("El JSON no tiene la estructura esperada")
 
             regex_pattern = re.compile("[0-9]{8}[A-Z]")
             valid_regex_patter_localizer = regex_pattern.fullmatch(input_data[segunda_clave])
             if valid_regex_patter_localizer is None:
-                raise HotelManagementException("El JSON notiene la estructura esperada")
+                raise HotelManagementException("El JSON no tiene la estructura esperada")
 
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
