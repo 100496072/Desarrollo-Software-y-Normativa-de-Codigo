@@ -8,7 +8,6 @@ import os
 import json
 from UC3MTravel import HotelManager
 from UC3MTravel import HotelManagementException
-from unittest import TestCase
 
 
 class TestGuestArrival(TestCase):
@@ -26,7 +25,11 @@ class TestGuestArrival(TestCase):
 
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_arrival.json"
-
+        with open(file_store, "w", ) as archivo:
+            archivo.write("")
+        data = {"Localizer": "d49c3ef42abd0183038e1f4ec296ed04","IdCard": "02564364W"}
+        with open(file_store, "w", ) as archivo:
+            json.dump(data, archivo, indent=4)
         my_hotelroom = HotelManager()
         room_key=my_hotelroom.guest_arrival(input_file= file_store)
 
@@ -46,13 +49,38 @@ class TestGuestArrival(TestCase):
 
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_arrival.json"
-
         my_hotelroom = HotelManager()
-        room_key = my_hotelroom.guest_arrival(input_file=file_store)
+        with open(file_store, "w", ) as archivo:
+            archivo.write("")
+        data = {"Localizer": "d49c3ef42abd0183038e1f4ec296ed04", "IdCard": "02564364W"}
+        with open(file_store, "a", ) as archivo:
+            for i in range(2):
+                json.dump(data, archivo, indent=4)
+                archivo.write("\n")
 
         with self.assertRaises(HotelManagementException) as error:
-            my_reservation.roomReservation(idcard="02564364W", creditcard="5105105105105100",
-                                           date_arrival="21/03/2024", name_and_surname="jose Lopez",
-                                           phonenumber="912345678", room_type="single", numdays="1")
+            room_key = my_hotelroom.guest_arrival(input_file=file_store)
 
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+
+    def test_guest_arrival_del_1(self):
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_reservation.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        my_reservation = HotelManager()
+        my_reservation.roomReservation(idcard="02564364W", creditcard="5105105105105100",
+                                       date_arrival="14/6/2024", name_and_surname="JOSE LOPEZ",
+                                       phonenumber="912345678", room_type="SINGLE", numdays="1")
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_arrival.json"
+        my_hotelroom = HotelManager()
+        with open(file_store, "w", ) as archivo:
+            archivo.write("")
+        with self.assertRaises(HotelManagementException) as error:
+            room_key = my_hotelroom.guest_arrival(input_file=file_store)
+
+        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+

@@ -174,9 +174,6 @@ class HotelManager:
             input_data = {}
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
-        print(input_data)
-        if len(input_data) == 0:
-            raise HotelManagementException("El JSON no tiene la estructura esperada")
         for item in input_data:
             claves = iter(input_data.keys())
             primera_clave = next(claves)
