@@ -4,10 +4,9 @@ import json
 import re
 from pathlib import Path
 from datetime import datetime
-from UC3MTravel import HotelManagementException
-from UC3MTravel import HotelReservation
-from UC3MTravel import HotelStay
-
+from .HotelManagementException import HotelManagementException
+from .HotelReservation import HotelReservation
+from .HotelStay import HotelStay
 
 class HotelManager:
     """Comentario"""
@@ -134,10 +133,9 @@ class HotelManager:
         except ValueError as eA:
             print({eA})
 
-        my_reservation = HotelReservation.HotelReservation(idcard=idcard, creditcard=creditcard,
-                                                           date_arrival=date_arrival,
-                                                           name_and_surname=name_and_surname, phonenumber=phonenumber,
-                                                           room_type=room_type, numdays=numdays)
+        my_reservation = HotelReservation(idcard=idcard, creditcard=creditcard, date_arrival=date_arrival,
+                                          name_and_surname=name_and_surname, phonenumber=phonenumber,
+                                          room_type=room_type, numdays=numdays)
 
         # Llamo la ruta del fichero almacén, donde almacenaremos todas las reservas
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
@@ -213,8 +211,7 @@ class HotelManager:
             if not found:
                 raise HotelManagementException("El localizador no se corresponde con los datos almacenados")
 
-        my_room = HotelStay.HotelStay(
-            reservation["_HotelReservation__idcard"], reservation["_HotelReservation__localizer"],
+        my_room = HotelStay(reservation["_HotelReservation__idcard"], reservation["_HotelReservation__localizer"],
             reservation["_HotelReservation__num_days"], reservation["_HotelReservation__roomtype"])
 
         return my_room.room_key
