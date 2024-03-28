@@ -31,7 +31,7 @@ class TestGuestArrival(TestCase):
         with open(file_store, "w", ) as archivo:
             json.dump(data, archivo, indent=4)
         my_hotelroom = HotelManager()
-        room_key=my_hotelroom.guest_arrival(input_file= file_store)
+        room_key=my_hotelroom.guestArrival(input_file= file_store)
 
         self.assertEqual("639493603b7794ae1d633bd1b592a45455d192987a7001d0670a237b5a5af97a", room_key)
 
@@ -59,7 +59,7 @@ class TestGuestArrival(TestCase):
                 archivo.write("\n")
 
         with self.assertRaises(HotelManagementException) as error:
-            room_key = my_hotelroom.guest_arrival(input_file=file_store)
+            room_key = my_hotelroom.guestArrival(input_file=file_store)
 
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
@@ -80,7 +80,7 @@ class TestGuestArrival(TestCase):
         with open(file_store, "w", ) as archivo:
             archivo.write("")
         with self.assertRaises(HotelManagementException) as error:
-            room_key = my_hotelroom.guest_arrival(input_file=file_store)
+            room_key = my_hotelroom.guestArrival(input_file=file_store)
 
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
@@ -106,7 +106,7 @@ class TestGuestArrival(TestCase):
             json.dump(data, archivo, indent=4)
 
         with self.assertRaises(HotelManagementException) as error:
-            room_key = my_hotelroom.guest_arrival(input_file=file_store)
+            room_key = my_hotelroom.guestArrival(input_file=file_store)
 
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
@@ -137,6 +137,6 @@ class TestGuestArrival(TestCase):
         with open(file_store, "w") as archivo:
             archivo.write(datos_finales)
         with self.assertRaises(HotelManagementException) as error:
-            room_key = my_hotelroom.guest_arrival(input_file=file_store)
+            room_key = my_hotelroom.guestArrival(input_file=file_store)
 
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")

@@ -17,7 +17,7 @@ class HotelManager:
 
     def validateCreditCard(self, x):
         """Comentario"""
-        if type(x) is not str:
+        if not isinstance(x, str):
             raise HotelManagementException("El número de tarjeta recibido no es válido o no tiene un formato válido.")
         if len(x) == 16:
             Suma = 0
@@ -42,7 +42,7 @@ class HotelManager:
     def validateIdcard(self, x):
         """Comentario"""
 
-        if type(x) is not str:
+        if not isinstance(x, str):
             raise HotelManagementException("El DNI no es válido.")
         if len(x) == 9 and x[:-1].isdigit():
 
@@ -58,7 +58,7 @@ class HotelManager:
 
     def validateNameSurname(self, x):
         """Comentario"""
-        if type(x) is not str:
+        if not isinstance(x, str):
             raise HotelManagementException("La cadena del nombre y apellidos no es válida.")
         if len(x) >= 0 and len(x) <= 50:
             separacion = x.split()
@@ -69,7 +69,7 @@ class HotelManager:
 
     def validatePhoneNumber(self, x):
         """Comentario"""
-        if type(x) is not str:
+        if not isinstance(x, str):
             raise HotelManagementException("El número de teléfono no es válido.")
         if len(x) != 9:
             raise HotelManagementException("El número de teléfono no es válido.")
@@ -81,7 +81,7 @@ class HotelManager:
 
     def validateArrival(self, x):
         """Comentario"""
-        if type(x) is not str:
+        if not isinstance(x, str):
             raise HotelManagementException("La fecha de entrada no es válida")
         try:
             datetime.strptime(x, "%d/%m/%Y")
@@ -90,7 +90,7 @@ class HotelManager:
 
     def validateNumDays(self, x):
         """Comentario"""
-        if type(x) is not str:
+        if not isinstance(x, str):
             raise HotelManagementException("El número de días no es válido.")
         if int(x) < 1 or int(x) > 10:
             raise HotelManagementException("El número de días no es válido.")
@@ -166,7 +166,8 @@ class HotelManager:
 
         return my_reservation.localizer
 
-    def guest_arrival(self, input_file: json):
+    def guestArrival(self, input_file: json):
+        "Comentario"
         try:
             with open(input_file, "r", encoding="utf-8", newline="") as file:
                 input_data = json.load(file)
@@ -212,7 +213,8 @@ class HotelManager:
             if not found:
                 raise HotelManagementException("El localizador no se corresponde con los datos almacenados")
 
-        my_room = HotelStay.HotelStay(reservation["_HotelReservation__idcard"], reservation["_HotelReservation__localizer"],
-                            reservation["_HotelReservation__num_days"], reservation["_HotelReservation__roomtype"])
+        my_room = HotelStay.HotelStay(
+            reservation["_HotelReservation__idcard"], reservation["_HotelReservation__localizer"],
+            reservation["_HotelReservation__num_days"], reservation["_HotelReservation__roomtype"])
 
         return my_room.room_key
