@@ -77,7 +77,7 @@ class TestGuestArrival(TestCase):
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_arrival.json"
         my_hotelroom = HotelManager()
-        with open(file_store, "w", ) as archivo:
+        with open(file_store, "w",) as archivo:
             archivo.write("")
         with self.assertRaises(HotelManagementException) as error:
             room_key = my_hotelroom.guestArrival(input_file=file_store)
@@ -139,4 +139,34 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             room_key = my_hotelroom.guestArrival(input_file=file_store)
 
+        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+
+    @freeze_time("01/07/2024")
+    def test_guest_arrival_dup_3(self):
+        json_files_path = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = json_files_path + "store_reservation.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        my_reservation = HotelManager()
+        my_reservation.roomReservation(idcard="02564364W", creditcard="5105105105105100",
+                                       date_arrival="14/6/2024", name_and_surname="JOSE LOPEZ",
+                                       phonenumber="912345678", room_type="SINGLE", numdays="1")
+
+        json_files_path = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = json_files_path + "store_arrival.json"
+        my_hotelroom = HotelManager()
+        with open(file_store, "w", ) as archivo:
+            archivo.write("")
+        localizer = "Localizer"
+        idcard = "IdCard"
+        contenido_localizer = "d49c3ef42abd0183038e1f4ec296ed04"
+        contenido_idcard = "02564364W"
+        data = '{\n\t' + f'"{localizer}" : "{contenido_localizer}" ,\n\t'+ f'"{idcard}" : "{contenido_idcard}",\n\t'+ f'"{localizer}" : "{contenido_localizer}" ,\n\t' + f'"{idcard}" : "{contenido_idcard}",\n' + '}'
+        with open(file_store, "w") as archivo:
+            json.dump(data, archivo, indent=4)
+        with open(file_store, "r") as archivo:
+            datos = archivo.read()
+        with self.assertRaises(HotelManagementException) as error:
+            room_key = my_hotelroom.guestArrival(input_file=file_store)
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
