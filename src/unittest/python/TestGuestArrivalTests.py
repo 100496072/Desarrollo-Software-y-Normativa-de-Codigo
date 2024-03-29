@@ -11,8 +11,10 @@ from UC3MTravel import HotelManagementException
 
 
 class TestGuestArrival(TestCase):
+    """Tests del método guest_arrival"""
     @freeze_time("01/07/2024")
-    def test_guest_arrival_valido(self):
+    def testGuestArrivalValido(self):
+        """Caso válido"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -36,7 +38,8 @@ class TestGuestArrival(TestCase):
         self.assertEqual("639493603b7794ae1d633bd1b592a45455d192987a7001d0670a237b5a5af97a", room_key)
 
     @freeze_time("01/07/2024")
-    def test_guest_arrival_dup_1(self):
+    def testGuestArrivalDup1(self):
+        """Se duplica el nodo 1"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -54,7 +57,7 @@ class TestGuestArrival(TestCase):
             archivo.write("")
         data = {"Localizer": "d49c3ef42abd0183038e1f4ec296ed04", "IdCard": "02564364W"}
         with open(file_store, "a", encoding="utf-8", newline="") as archivo:
-            for i in range(2):
+            for _ in range(2):
                 json.dump(data, archivo, indent=4)
                 archivo.write("\n")
 
@@ -63,7 +66,8 @@ class TestGuestArrival(TestCase):
 
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
-    def test_guest_arrival_del_1(self):
+    def testGuestArrivalDel1(self):
+        """Eliminamos el nodo 1"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -85,7 +89,8 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
     @freeze_time("01/07/2024")
-    def test_guest_arrival_dup_2(self):
+    def testGuestArrivalDup2(self):
+        """Duplicamos el nodo 2"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -112,6 +117,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_2(self):
+        """Eliminamos el nodo 2"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -178,6 +184,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_3(self):
+        """Eliminamos el nodo 3"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -227,6 +234,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_4(self):
+        """Eliminamos el nodo 4"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -320,6 +328,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_6(self):
+        """Eliminamos el nodo 6"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -376,6 +385,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_7(self):
+        """Eliminamos el nodo 7"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -437,6 +447,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_8(self):
+        """Eliminamos el nodo 8"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -530,6 +541,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_10(self):
+        """Eliminamos el nodo 10"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -594,6 +606,7 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_11(self):
+        """Eliminamos el nodo 11"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -614,7 +627,7 @@ class TestGuestArrival(TestCase):
             json.dump(data, archivo, indent=4)
         with open(file_store, "r", encoding="utf-8", newline="") as archivo:
             datos = archivo.read()
-        caracter_buscado = (',')
+        caracter_buscado = ','
         pos = datos.find(caracter_buscado)
         long = len(caracter_buscado)
         datos_finales = datos[:pos] + datos[pos + long:]
@@ -658,6 +671,7 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_12(self):
+        """Eliminamos el nodo 12"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -754,6 +768,7 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_14(self):
+        """Eliminamos el nodo 14"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -822,6 +837,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_15(self):
+        """Eliminamos el nodo 15"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -889,6 +905,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_16(self):
+        """Eliminamos el nodo 16"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -957,6 +974,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_17(self):
+        """Eliminamos el nodo 17"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1023,10 +1041,11 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_18(self):
+        """Eliminamos el nodo 18"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1058,7 +1077,7 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_dup_19(self):
@@ -1097,6 +1116,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_19(self):
+        """Eliminamos el nodo 19"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1203,6 +1223,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_21(self):
+        """Eliminamos el nodo 21"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1269,10 +1290,11 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_22(self):
+        """Eliminamos el nodo 22"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1304,7 +1326,7 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_dup_23(self):
@@ -1343,6 +1365,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_23(self):
+        """Eliminamos el nodo 23"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1413,6 +1436,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_24(self):
+        """Eliminamos el nodo 24"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1479,10 +1503,11 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_25(self):
+        """Eliminamos el nodo 25"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1514,7 +1539,7 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_dup_26(self):
@@ -1553,6 +1578,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_26(self):
+        """Eliminamos el nodo 26"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1659,6 +1685,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_28(self):
+        """Eliminamos el nodo 28"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1725,10 +1752,11 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_29(self):
+        """Eliminamos el nodo 29"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1760,7 +1788,7 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_dup_30(self):
@@ -1786,7 +1814,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = '"'
         pos = 0
-        for i in range(8):
+        for _ in range(8):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         datos_finales = datos[:pos] + caracter_buscado + caracter_buscado + datos[pos + long:]
@@ -1799,6 +1827,7 @@ class TestGuestArrival(TestCase):
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_del_30(self):
+        """Eliminamos el nodo 30"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1902,7 +1931,7 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_mod_33(self):
@@ -2010,7 +2039,7 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_mod_36(self):
@@ -2118,7 +2147,7 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_mod_39(self):
@@ -2226,7 +2255,7 @@ class TestGuestArrival(TestCase):
         with self.assertRaises(HotelManagementException) as error:
             my_hotelroom.guestArrival(input_file=file_store)
 
-        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
+        self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
     def test_guest_arrival_mod_42(self):
