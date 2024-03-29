@@ -116,7 +116,7 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
     @freeze_time("01/07/2024")
-    def test_guest_arrival_del_2(self):
+    def testGuestArrivalDel2(self):
         """Eliminamos el nodo 2"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
@@ -148,7 +148,8 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
     @freeze_time("01/07/2024")
-    def test_guest_arrival_dup_3(self):
+    def testGuestArrivalDup3(self):
+        """Duplicamos el nodo 3"""
         json_files_path = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = json_files_path + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -171,11 +172,11 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = '{'
         pos = 0
-        for i in range(1):
+        for _ in range(1):
             pos = datos.find(caracter_buscado, pos)
         long = len(caracter_buscado)
         relleno = '"Localizer": "d49c3ef42abd0183038e1f4ec296ed04","IdCard": "02564364W"'
-        datos_finales = datos[:pos] + relleno + relleno + datos[pos + 2*len(relleno):]
+        datos_finales = datos[:pos] + relleno + relleno + datos[pos + 2*long:]
         with open(file_store, "w", encoding="utf-8", newline="") as archivo:
             archivo.write(datos_finales)
         with self.assertRaises(HotelManagementException) as error:
@@ -183,7 +184,7 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
     @freeze_time("01/07/2024")
-    def test_guest_arrival_del_3(self):
+    def testGuestArrivalDel3(self):
         """Eliminamos el nodo 3"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
@@ -206,7 +207,8 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "El JSON no tiene la estructura esperada")
 
     @freeze_time("01/07/2024")
-    def test_guest_arrival_dup_4(self):
+    def testGuestArrivalDup4(self):
+        """Duplicamos el nodo 4"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -233,7 +235,7 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
     @freeze_time("01/07/2024")
-    def test_guest_arrival_del_4(self):
+    def testGuestArrivalDel4(self):
         """Eliminamos el nodo 4"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
@@ -265,7 +267,8 @@ class TestGuestArrival(TestCase):
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
     @freeze_time("01/07/2024")
-    def test_guest_arrival_mod_5(self):
+    def testGuestArrivalMod5(self):
+        """Modificamos el nodo 5"""
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_reservation.json"
         if os.path.isfile(file_store):
@@ -1068,7 +1071,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = 'Localizer'
         pos = 0
-        for i in range(1):
+        for _ in range(1):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         datos_finales = datos[:pos] + datos[pos + long:]
@@ -1174,7 +1177,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = ':'
         pos = 0
-        for i in range(1):
+        for _ in range(1):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         caracter_modificado = ';'
@@ -1850,7 +1853,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = '"'
         pos = 0
-        for i in range(8):
+        for _ in range(8):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         datos_finales = datos[:pos] + datos[pos + long:]
@@ -1885,7 +1888,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = '"'
         pos = 0
-        for i in range(1):
+        for _ in range(1):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         caracter_modificado = '_'
@@ -1921,7 +1924,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = 'Localizer'
         pos = 0
-        for i in range(1):
+        for _ in range(1):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         caracter_modificado = 'LLasid'
@@ -1957,7 +1960,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = '"'
         pos = 0
-        for i in range(2):
+        for _ in range(2):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         caracter_modificado = '¨'
@@ -2029,7 +2032,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = 'd49c3ef42abd0183038e1f4ec296ed04'
         pos = 0
-        for i in range(1):
+        for _ in range(1):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         caracter_modificado = '33mollso¡'
@@ -2065,7 +2068,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = '"'
         pos = 0
-        for i in range(4):
+        for _ in range(4):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         caracter_modificado = '-'
@@ -2101,7 +2104,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = '"'
         pos = 0
-        for i in range(5):
+        for _ in range(5):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         caracter_modificado = '*'
@@ -2137,7 +2140,7 @@ class TestGuestArrival(TestCase):
             datos = archivo.read()
         caracter_buscado = 'IdCard'
         pos = 0
-        for i in range(1):
+        for _ in range(1):
             pos = datos.find(caracter_buscado, pos + 1)
         long = len(caracter_buscado)
         caracter_modificado = 'DNI98'
