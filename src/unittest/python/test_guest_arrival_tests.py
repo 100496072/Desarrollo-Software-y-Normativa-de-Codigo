@@ -271,4 +271,33 @@ class TestGuestArrival(TestCase):
 
         self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
 
+    @freeze_time("01/07/2024")
+    def test_guest_arrival_dup_6(self):
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_reservation.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
 
+        my_reservation = HotelManager()
+        my_reservation.roomReservation(idcard="02564364W", creditcard="5105105105105100",
+                                       date_arrival="14/6/2024", name_and_surname="JOSE LOPEZ",
+                                       phonenumber="912345678", room_type="SINGLE", numdays="1")
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        file_store = JSON_FILES_PATH + "store_arrival.json"
+        my_hotelroom = HotelManager()
+        with open(file_store, "w", encoding="utf-8", newline="") as archivo:
+            archivo.write("")
+        data = {"Localizer": "d49c3ef42abd0183038e1f4ec296ed04", "IdCard": "02564364W"}
+        with open(file_store, "a", encoding="utf-8", newline="") as archivo:
+            json.dump(data, archivo, indent=4)
+        with open(file_store, "r", encoding="utf-8", newline="") as archivo:
+            datos = archivo.read()
+        pos = datos.find("{") + 1
+        datos_finales = datos[:pos] + '"Localizer": "d49c3ef42abd0183038e1f4ec296ed04"' + datos[pos + 1:]
+        with open(file_store, "w", encoding="utf-8", newline="") as archivo:
+            archivo.write(datos_finales)
+        with self.assertRaises(HotelManagementException) as error:
+            my_hotelroom.guestArrival(input_file=file_store)
+
+        self.assertEqual(error.exception.message, "JSON Decode Error - Wrong JSON Format")
