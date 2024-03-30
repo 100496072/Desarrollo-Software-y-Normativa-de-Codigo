@@ -259,9 +259,8 @@ variable-naming-style=PascalCase
 # Regular expression matching correct variable names. Overrides variable-
 # naming-style. If left empty, variable names will be checked with the set
 # naming style.
-# REGLA MODIFICADA
-#variable-rgx=
-variable-rgx=[a-zA-Z_][a-zA-Z0-9_]{1,}$
+variable-rgx=
+
 
 
 [CLASSES]
