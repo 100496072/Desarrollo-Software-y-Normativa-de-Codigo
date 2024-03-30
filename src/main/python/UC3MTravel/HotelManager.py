@@ -198,16 +198,16 @@ class HotelManager:
 
         try:
             with open(FileStore, "r", encoding="utf-8", newline="") as File:
-                DataList = json.load(File)
+                InputList = json.load(File)
         except FileNotFoundError:
-            DataList = []
+            InputList = []
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
 
         #Hay que poner esto como un while
-        for Search in DataList:
+        for Search in InputList:
             Found = False
-            if InputData[PrimeraClave] == Search["_HotelReservation__localizer"]:
+            if InputList[PrimeraClave] == Search["_HotelReservation__localizer"]:
                 Found = True
                 Reservation = Search
             if not Found:
@@ -216,4 +216,52 @@ class HotelManager:
         MyRoom = HotelStay(Reservation["_HotelReservation__idcard"], Reservation["_HotelReservation__localizer"],
             Reservation["_HotelReservation__num_days"], Reservation["_HotelReservation__roomtype"])
 
+        # Llamo la ruta del fichero almacén, donde almacenaremos todas las reservas
+        JsonFilesPath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        FileStore = JsonFilesPath + "check_in.json"
+
+        # Comprobamos que dicho fichero existe
+        try:
+            with open(FileStore, "r", encoding="utf-8", newline="") as File:
+                DataList = json.load(File)
+        except FileNotFoundError:
+            DataList = []
+        except json.JSONDecodeError as ex:
+            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
+        # Guardar los datos en un fichero almacen y comprobar que no están repetidos
+
+        DataList.append(MyRoom.__dict__)
+        try:
+            with open(FileStore, "w", encoding="utf-8", newline="") as File:
+                json.dump(DataList, File, indent=2)
+        except FileNotFoundError as ex:
+            raise HotelManagementException("Wrong File or File path") from ex
         return MyRoom.room_key
+    def guestCheckout(self, room_key):
+        """Método que comprueba la salida del cliente"""
+        JsonFilesPath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        FileStore = JsonFilesPath + "check_in.json"
+
+        try:
+            with open(FileStore, "r", encoding="utf-8", newline="") as File:
+                InputList = json.load(File)
+        except FileNotFoundError:
+            InputList = []
+        except json.JSONDecodeError as ex:
+            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
+
+        #Hay que poner esto como un while
+        for Search in InputList:
+            Found = False
+            if room_key == Search["_HotelStay__roomkey"]:
+                Found = True
+                Reservation = Search
+            if not Found:
+                raise HotelManagementException("Elcódigo de habitación no estaba registrado.")
+        JustNow = datetime.utcnow()
+        FechaReferencia = datetime(1970, 1, 1)
+        Diferencia = JustNow - FechaReferencia
+        if Reservation["_HotelStay__departure"] != Diferencia:
+            raise HotelManagementException("La fecha de salida no es válida")
+
+        return True
