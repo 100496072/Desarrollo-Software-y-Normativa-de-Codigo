@@ -22,20 +22,20 @@ class TestGuestArrival(TestCase):
 
         my_reservation = HotelManager()
         my_reservation.roomReservation(idcard="02564364W", creditcard="5105105105105100",
-                                               date_arrival="14/6/2024", name_and_surname="JOSE LOPEZ",
+                                               date_arrival="30/3/2024", name_and_surname="JOSE LOPEZ",
                                                phonenumber="912345678", room_type="SINGLE", numdays="1")
 
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_arrival.json"
         with open(file_store, "w", encoding="utf-8", newline="") as archivo:
             archivo.write("")
-        data = {"Localizer": "d49c3ef42abd0183038e1f4ec296ed04","IdCard": "02564364W"}
+        data = {"Localizer": "ca17658d285f1fa5d8576e325477109a","IdCard": "02564364W"}
         with open(file_store, "w", encoding="utf-8", newline="") as archivo:
             json.dump(data, archivo, indent=4)
         my_hotelroom = HotelManager()
         room_key = my_hotelroom.guestArrival(input_file= file_store)
 
-        self.assertEqual("639493603b7794ae1d633bd1b592a45455d192987a7001d0670a237b5a5af97a", room_key)
+        self.assertEqual("7f32606c005b58967612f03dabd74cc7db0d598cf8877825e040765ab355daf0", room_key)
 
     @freeze_time("01/07/2024")
     def testGuestArrivalDup1(self):

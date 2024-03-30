@@ -204,19 +204,21 @@ class HotelManager:
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
 
-        #Hay que poner esto como un while
+        #Hay que poner esto como un while, pero aquí lo que hacemos es buscar en las reservas para comprobar que el
+        # localizador está en nuestro almacén
         for Search in InputList:
             Found = False
-            if InputList[PrimeraClave] == Search["_HotelReservation__localizer"]:
+            if InputData[PrimeraClave] == Search["_HotelReservation__localizer"]:
                 Found = True
                 Reservation = Search
-            if not Found:
-                raise HotelManagementException("El localizador no se corresponde con los datos almacenados")
-
+        if not Found:
+            raise HotelManagementException("El localizador no se corresponde con los datos almacenados")
+        if Reservation["_HotelReservation__reservation_date"] != self.fechaHoy():
+            raise HotelManagementException("La fecha de llegada no se corresponde con la fecha de reserva")
         MyRoom = HotelStay(Reservation["_HotelReservation__idcard"], Reservation["_HotelReservation__localizer"],
             Reservation["_HotelReservation__num_days"], Reservation["_HotelReservation__roomtype"])
 
-        # Llamo la ruta del fichero almacén, donde almacenaremos todas las reservas
+        # Llamo la ruta del fichero almacén, donde almacenaremos todas los check_in
         JsonFilesPath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         FileStore = JsonFilesPath + "check_in.json"
 
@@ -229,7 +231,6 @@ class HotelManager:
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
         # Guardar los datos en un fichero almacen y comprobar que no están repetidos
-
         DataList.append(MyRoom.__dict__)
         try:
             with open(FileStore, "w", encoding="utf-8", newline="") as File:
@@ -250,7 +251,8 @@ class HotelManager:
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
 
-        #Hay que poner esto como un while
+        #Hay que poner esto como un while, buscamos si la roomkey está guardad en nuestro almacén de check in,
+        # entonces hay una habitación
         for Search in InputList:
             Found = False
             if room_key == Search["_HotelStay__roomkey"]:
@@ -258,10 +260,14 @@ class HotelManager:
                 Reservation = Search
             if not Found:
                 raise HotelManagementException("Elcódigo de habitación no estaba registrado.")
-        JustNow = datetime.utcnow()
-        FechaReferencia = datetime(1970, 1, 1)
-        Diferencia = JustNow - FechaReferencia
-        if Reservation["_HotelStay__departure"] != Diferencia:
+        #Si no se cumple la comprobación, es que se está dejando la habitación en un día que no era el de finalización
+        if Reservation["_HotelStay__departure"] != self.fechaHoy():
             raise HotelManagementException("La fecha de salida no es válida")
 
         return True
+
+    def fechaHoy(self):
+        """Calcula y devuelve la fecha de hoy"""
+        JustNow = datetime.utcnow()
+        Fecha = datetime.timestamp(JustNow)
+        return Fecha
