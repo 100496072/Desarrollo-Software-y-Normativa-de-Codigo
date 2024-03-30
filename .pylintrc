@@ -324,7 +324,7 @@ max-parents=7
 # Maximum number of public methods for a class (see R0904).
 #REGLA MODIFICADA
 #max-public-methods=20
-max-public-methods=25
+max-public-methods=100
 
 # Maximum number of return / yield for function / method body.
 max-returns=6
@@ -365,7 +365,9 @@ indent-string='    '
 max-line-length=120
 
 # Maximum number of lines in a module.
-max-module-lines=1000
+# REGLA MODIFICADA
+#max-module-lines=1000
+max-module-lines=3000
 
 # Allow the body of a class to be on the same line as the declaration if body
 # contains single statement.
