@@ -238,6 +238,7 @@ class HotelManager:
         except FileNotFoundError as ex:
             raise HotelManagementException("Wrong File or File path") from ex
         return MyRoom.room_key
+
     def guestCheckout(self, room_key):
         """Método que comprueba la salida del cliente"""
         JsonFilesPath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
@@ -259,7 +260,8 @@ class HotelManager:
                 Found = True
                 Reservation = Search
             if not Found:
-                raise HotelManagementException("Elcódigo de habitación no estaba registrado.")
+                raise HotelManagementException("El código de habitación no estaba registrado.")
+
         #Si no se cumple la comprobación, es que se está dejando la habitación en un día que no era el de finalización
         if Reservation["_HotelStay__departure"] != self.fechaHoy():
             raise HotelManagementException("La fecha de salida no es válida")
@@ -269,5 +271,5 @@ class HotelManager:
     def fechaHoy(self):
         """Calcula y devuelve la fecha de hoy"""
         JustNow = datetime.utcnow()
-        Fecha = datetime.timestamp(JustNow)
+        Fecha = JustNow.timestamp()
         return Fecha
