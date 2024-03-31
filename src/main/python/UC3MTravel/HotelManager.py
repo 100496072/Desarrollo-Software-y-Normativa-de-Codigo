@@ -247,18 +247,18 @@ class HotelManager:
         # Apertura del fichero en modo lectura
         try:
             with open(FilePath, "r", encoding="utf-8", newline="") as File:
-                keyList = json.load(File)
+                keylist = json.load(File)
         except FileNotFoundError:
-            keyList = []
+            KeyList = []
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Formato JSON no válido") from ex
 
         # Busqueda de la roomkey en el fichero para saber si es válida
-        for key in keyList:
+        for Key in KeyList:
             Found = False
-            if room_key == key["_HotelStay__roomkey"]:
+            if room_key == Key["_HotelStay__roomkey"]:
                 Found = True
-                Salida = key
+                Salida = Key
             if not Found:
                 raise HotelManagementException("Código de habitación no registrado.")
 
@@ -267,6 +267,24 @@ class HotelManager:
         if Salida["_HotelStay__departure"] != self.fechaHoy():
             raise HotelManagementException("La fecha de salida no es válida")
 
+        # Se llama a la ruta del fichero donde se almacenan las salidas
+        FileStore = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/check_out.json"
+
+        #Comprobamos que existe el fichero para las salidas
+        try:
+            with open(FileStore, "r", encoding="utf-8", newline="") as File:
+                CheckOutlist = json.load(File)
+        except FileNotFoundError:
+            CheckOutlist = []
+        except json.JSONDecodeError as ex:
+            raise HotelManagementException("JSON Decode Error - Formato JSON no válido") from ex
+        #Guardamos los datos
+        CheckOutList.append()
+        try:
+            with open(FileStore, "w", encoding="utf-8", newline="") as File:
+                json.dump(CheckOutlist, File, indent=2)
+        except FileNotFoundError as ex:
+            raise HotelManagementException("Error en el path o archivo") from ex
         return True
 
     def fechaHoy(self):
