@@ -175,23 +175,7 @@ class HotelManager:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
         if len(InputData) != 2:
             raise HotelManagementException("El JSON no tiene la estructura esperada")
-        for _ in InputData:
-            Claves = iter(InputData.keys())
-            PrimeraClave = next(Claves)
-            if PrimeraClave != "Localizer":
-                raise HotelManagementException("El JSON no tiene la estructura esperada")
-            SegundaClave = next(Claves)
-            if SegundaClave != "IdCard":
-                raise HotelManagementException("El JSON no tiene la estructura esperada")
-            RegexPattern = re.compile("[0-9, a-z]{32}")
-            ValidRegexPatternLocalizer = RegexPattern.fullmatch(InputData[PrimeraClave])
-            if ValidRegexPatternLocalizer is None:
-                raise HotelManagementException("El JSON no tiene la estructura esperada")
-
-            RegexPattern = re.compile("[0-9]{8}[A-Z]")
-            ValidRegexPatternLocalizer = RegexPattern.fullmatch(InputData[SegundaClave])
-            if ValidRegexPatternLocalizer is None:
-                raise HotelManagementException("El JSON no tiene la estructura esperada")
+        self.claves(InputData)
 
         JsonFilesPath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         FileStore = JsonFilesPath + "store_reservation.json"
@@ -208,7 +192,7 @@ class HotelManager:
         # localizador está en nuestro almacén
         for Search in InputList:
             Found = False
-            if InputData[PrimeraClave] == Search["_HotelReservation__localizer"]:
+            if InputData["Localizer"] == Search["_HotelReservation__localizer"]:
                 Found = True
                 Reservation = Search
         if not Found:
@@ -239,6 +223,26 @@ class HotelManager:
             raise HotelManagementException("Wrong File or File path") from ex
         return MyRoom.room_key
 
+
+    def claves(self, input_data):
+        """HOLA"""
+        for _ in input_data:
+            Claves = iter(input_data.keys())
+            PrimeraClave = next(Claves)
+            if PrimeraClave != "Localizer":
+                raise HotelManagementException("El JSON no tiene la estructura esperada")
+            SegundaClave = next(Claves)
+            if SegundaClave != "IdCard":
+                raise HotelManagementException("El JSON no tiene la estructura esperada")
+            RegexPattern = re.compile("[0-9, a-z]{32}")
+            ValidRegexPatternLocalizer = RegexPattern.fullmatch(input_data[PrimeraClave])
+            if ValidRegexPatternLocalizer is None:
+                raise HotelManagementException("El JSON no tiene la estructura esperada")
+
+            RegexPattern = re.compile("[0-9]{8}[A-Z]")
+            ValidRegexPatternLocalizer = RegexPattern.fullmatch(input_data[SegundaClave])
+            if ValidRegexPatternLocalizer is None:
+                raise HotelManagementException("El JSON no tiene la estructura esperada")
     def guestCheckout(self, room_key):
         """Método que comprueba la salida del cliente"""
         # Se llama a la ruta del fichero donde se almacenan las reservas
