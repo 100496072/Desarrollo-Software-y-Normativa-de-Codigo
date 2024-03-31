@@ -247,7 +247,7 @@ class HotelManager:
         # Apertura del fichero en modo lectura
         try:
             with open(FilePath, "r", encoding="utf-8", newline="") as File:
-                keylist = json.load(File)
+                KeyList = json.load(File)
         except FileNotFoundError:
             KeyList = []
         except json.JSONDecodeError as ex:
@@ -273,11 +273,12 @@ class HotelManager:
         #Comprobamos que existe el fichero para las salidas
         try:
             with open(FileStore, "r", encoding="utf-8", newline="") as File:
-                CheckOutlist = json.load(File)
+                CheckOutList = json.load(File)
         except FileNotFoundError:
-            CheckOutlist = []
+            CheckOutList = []
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Formato JSON no válido") from ex
+
         #Guardamos los datos
         CheckOutList.append()
         try:
