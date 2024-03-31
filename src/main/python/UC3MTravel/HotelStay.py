@@ -59,8 +59,8 @@ class HotelStay():
 
     @property
     def fecha_llegada_int(self):
-        justnow = datetime.utcnow()
-        fecha_referencia = datetime(1970, 1, 1)
-        diferencia = justnow - fecha_referencia
-        fecha_llegada = str(diferencia.total_seconds())
-        return fecha_llegada
+        Justnow = datetime.utcnow()
+        FechaReferencia = datetime(1970, 1, 1)
+        Diferencia = Justnow - FechaReferencia
+        FechaLlegada = str(Diferencia.total_seconds())
+        return FechaLlegada

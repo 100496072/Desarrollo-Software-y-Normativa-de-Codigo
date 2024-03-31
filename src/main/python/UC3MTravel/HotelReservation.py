@@ -8,11 +8,11 @@ class HotelReservation():
     def __init__(self, idcard, creditcard, date_arrival, name_and_surname, phonenumber, room_type, numdays):
         self.__idcard = idcard
         self.__creditcard = creditcard
-        justnow = datetime.utcnow()
+        Justnow = datetime.utcnow()
         self.__arrival = date_arrival
         self.__name_surname = name_and_surname
         self.__phonenumber = phonenumber
-        self.__reservation_date = datetime.timestamp(justnow)
+        self.__reservation_date = datetime.timestamp(Justnow)
         self.__roomtype = room_type
         self.__num_days = numdays
         self.__localizer = hashlib.md5(self.__str__().encode()).hexdigest()
@@ -20,7 +20,7 @@ class HotelReservation():
     def __str__(self):
         """return a json string with the elements required to calculate the localizer"""
         #VERY IMPORTANT: JSON KEYS CANNOT BE RENAMED
-        json_info = {"id_card": self.__idcard,
+        JsonInfo = {"id_card": self.__idcard,
                      "credit_card": self.__creditcard,
                      "arrival_date": self.__arrival,
                      "name_surname": self.__name_surname,
@@ -29,7 +29,7 @@ class HotelReservation():
                      "room_type": self.__roomtype,
                      "num_days": self.__num_days,
                      }
-        return "HotelReservation:" + json_info.__str__()
+        return "HotelReservation:" + JsonInfo.__str__()
 
     @property
     def creditcard(self):
