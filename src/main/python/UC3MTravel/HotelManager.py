@@ -279,11 +279,12 @@ class HotelManager:
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Formato JSON no válido") from ex
 
-        #Guardamos los datos
-        CheckOutList.append()
+        #Guardamos los datos en el fichero para las salidas
+        CheckOutData = {"Room_key": room_key, "Time": self.fechaHoy()}
+        CheckOutList.append(CheckOutData)
         try:
             with open(FileStore, "w", encoding="utf-8", newline="") as File:
-                json.dump(CheckOutlist, File, indent=2)
+                json.dump(CheckOutList, File, indent=2)
         except FileNotFoundError as ex:
             raise HotelManagementException("Error en el path o archivo") from ex
         return True
