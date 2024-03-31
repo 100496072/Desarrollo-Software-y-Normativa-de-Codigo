@@ -241,29 +241,30 @@ class HotelManager:
 
     def guestCheckout(self, room_key):
         """Método que comprueba la salida del cliente"""
-        JsonFilesPath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
-        FileStore = JsonFilesPath + "check_in.json"
+        # Se llama a la ruta del fichero donde se almacenan las reservas
+        FilePath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/check_in.json"
 
+        # Apertura del fichero en modo lectura
         try:
-            with open(FileStore, "r", encoding="utf-8", newline="") as File:
-                InputList = json.load(File)
+            with open(FilePath, "r", encoding="utf-8", newline="") as File:
+                keyList = json.load(File)
         except FileNotFoundError:
-            InputList = []
+            keyList = []
         except json.JSONDecodeError as ex:
-            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
+            raise HotelManagementException("JSON Decode Error - Formato JSON no válido") from ex
 
-        #Hay que poner esto como un while, buscamos si la roomkey está guardad en nuestro almacén de check in,
-        # entonces hay una habitación
-        for Search in InputList:
+        # Busqueda de la roomkey en el fichero para saber si es válida
+        for key in keyList:
             Found = False
-            if room_key == Search["_HotelStay__roomkey"]:
+            if room_key == key["_HotelStay__roomkey"]:
                 Found = True
-                Reservation = Search
+                Salida = key
             if not Found:
-                raise HotelManagementException("El código de habitación no estaba registrado.")
+                raise HotelManagementException("Código de habitación no registrado.")
 
-        #Si no se cumple la comprobación, es que se está dejando la habitación en un día que no era el de finalización
-        if Reservation["_HotelStay__departure"] != self.fechaHoy():
+        # Sólo se puede dejar la habitación en la fecha prevista.
+        # Si la comparación no se cumple, la fecha no es válida.
+        if Salida["_HotelStay__departure"] != self.fechaHoy():
             raise HotelManagementException("La fecha de salida no es válida")
 
         return True
