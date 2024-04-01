@@ -271,8 +271,8 @@ class HotelManager:
             if room_key == Key["_HotelStay__roomkey"]:
                 Found = True
                 Salida = Key
-            if not Found:
-                raise HotelManagementException("Código de habitación no registrado.")
+        if not Found:
+            raise HotelManagementException("Código de habitación no registrado.")
 
         # Sólo se puede dejar la habitación en la fecha prevista.
         # Si la comparación no se cumple, la fecha no es válida.
