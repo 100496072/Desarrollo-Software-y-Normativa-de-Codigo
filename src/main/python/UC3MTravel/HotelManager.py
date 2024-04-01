@@ -171,7 +171,7 @@ class HotelManager:
         return MyReservation.localizer
 
     def guestArrival(self, input_file: json):
-        "Este método se encarga de la llegada"
+        """Este método se encarga de la llegada"""
         try:
             with open(input_file, "r", encoding="utf-8", newline="") as File:
                 InputData = json.load(File)
@@ -194,22 +194,24 @@ class HotelManager:
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from ex
 
-        #Hay que poner esto como un while, pero aquí lo que hacemos es buscar en las reservas para comprobar que el
-        # localizador está en nuestro almacén
-        for Search in InputList:
-            Found = False
-            if InputData["Localizer"] == Search["_HotelReservation__localizer"]:
+        #Lo que hacemos es buscar en las reservas para comprobar que el localizador está en nuestro almacén
+        Contador = 0
+        Found = False
+        while not Found and Contador < len(InputList):
+            if InputData["Localizer"] == InputList[Contador]["_HotelReservation__localizer"]:
                 Found = True
-                Reservation = Search
+                Reservation = InputList[Contador]
+                Contador += 1
         if not Found:
             raise HotelManagementException("El localizador no se corresponde con los datos almacenados")
+        self.archivoNoModificado(InputList, Contador - 1)
+
         if Reservation["_HotelReservation__reservation_date"] != self.fechaHoy():
             raise HotelManagementException("La fecha de llegada no se corresponde con la fecha de reserva")
         MyRoom = HotelStay(Reservation["_HotelReservation__idcard"], Reservation["_HotelReservation__localizer"],
             Reservation["_HotelReservation__num_days"], Reservation["_HotelReservation__roomtype"])
 
         # Llamo la ruta del fichero almacén, donde almacenaremos todas los check_in
-        JsonFilesPath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
         FileStore = JsonFilesPath + "check_in.json"
 
         # Comprobamos que dicho fichero existe
@@ -304,3 +306,32 @@ class HotelManager:
         JustNow = datetime.utcnow()
         Fecha = JustNow.timestamp()
         return Fecha
+
+    def archivoNoModificado(self, lista_datos, pos):
+        """Método que comprueba si un archivo ha sido modificado"""
+        JsonFilesPath = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/"
+        FileStore = JsonFilesPath + "store_reservation.json"
+        Datos = lista_datos[pos]
+        lista_datos.pop(pos)
+        try:
+            with open(FileStore, "w", encoding="utf-8", newline="") as File:
+                json.dump(lista_datos, File, indent=2)
+        except FileNotFoundError as ex:
+            raise HotelManagementException("Error en el path o archivo") from ex
+
+        MyReservation = HotelReservation(idcard=Datos['_HotelReservation__idcard'],
+                                         creditcard=Datos['_HotelReservation__creditcard'],
+                                         date_arrival=Datos['_HotelReservation__arrival'],
+                                         name_and_surname=Datos['_HotelReservation__name_surname'],
+                                         phonenumber=Datos['_HotelReservation__phonenumber'],
+                                         room_type=Datos['_HotelReservation__roomtype'],
+                                         numdays=Datos['_HotelReservation__num_days'])
+
+        if MyReservation.localizer != Datos['_HotelReservation__localizer']:
+            raise HotelManagementException("El localizador no se corresponde con los datos almacenados.")
+        lista_datos.append(Datos)
+        try:
+            with open(FileStore, "w", encoding="utf-8", newline="") as File:
+                json.dump(lista_datos, File, indent=2)
+        except FileNotFoundError as ex:
+            raise HotelManagementException("Error en el path o archivo") from ex
