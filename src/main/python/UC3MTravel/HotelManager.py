@@ -9,6 +9,10 @@ from .HotelManagementException import HotelManagementException
 from .HotelReservation import HotelReservation
 from .HotelStay import HotelStay
 
+#Hemos tenido un problema con los imports de los otros ficheros de UC3MTravel, si hay otro error en pylint sale:
+#Attempted relative import beyond top-level package (8:0) [relative-beyond-top-level] así con cada línea, dado que no
+#entendemos la naturaleza de este suceso,y que a veces aparece y a veces no, hemos optado por no cambiar nada y dejar
+#los imports tal y como se nos ha especificado
 class HotelManager:
     """Clase HotelManager"""
 
