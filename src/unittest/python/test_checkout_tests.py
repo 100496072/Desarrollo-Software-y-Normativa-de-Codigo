@@ -1,5 +1,5 @@
 """
-Created by Marcos Romo Poveda in mar 2024
+Created by Luca, Marcos and Alicia in mar 2024
 """
 from unittest import TestCase
 from freezegun import freeze_time

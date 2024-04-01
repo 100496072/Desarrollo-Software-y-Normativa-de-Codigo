@@ -1,10 +1,11 @@
-"""Comentario"""
+"""Created by Luca, Marcos and Alicia in mar 2024
+"""
 import hashlib
 from datetime import datetime
 
 #je
 class HotelReservation():
-    """Comentario"""
+    """Clase Hotel Reservation"""
     def __init__(self, idcard, creditcard, date_arrival, name_and_surname, phonenumber, room_type, numdays):
         self.__idcard = idcard
         self.__creditcard = creditcard

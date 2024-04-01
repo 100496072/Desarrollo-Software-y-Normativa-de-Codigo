@@ -1,4 +1,5 @@
-"""Comentario"""
+"""Created by Luca, Marcos and Alicia in mar 2024
+"""
 
 import json
 import re
@@ -9,13 +10,13 @@ from .HotelReservation import HotelReservation
 from .HotelStay import HotelStay
 
 class HotelManager:
-    """Comentario"""
+    """Clase HotelManager"""
 
     def __init__(self):
         pass
 
     def validateCreditCard(self, x):
-        """Comentario"""
+        """Este método valida la tarjeta de crédito"""
         if not isinstance(x, str):
             raise HotelManagementException("El número de tarjeta recibido no es válido o no tiene un formato válido.")
         if len(x) == 16:
@@ -39,8 +40,7 @@ class HotelManager:
         raise HotelManagementException("El número de tarjeta recibido no es válido o no tiene un formato válido.")
 
     def validateIdcard(self, x):
-        """Comentario"""
-
+        """Este método valida el DNI"""
         if not isinstance(x, str):
             raise HotelManagementException("El DNI no es válido.")
         if len(x) == 9 and x[:-1].isdigit():
@@ -56,10 +56,12 @@ class HotelManager:
             raise HotelManagementException("El DNI no es válido.")
 
     def validateNameSurname(self, x):
-        """Comentario"""
-        if not isinstance(x, str):
+        """Este método valida los nombres y apellidos"""
+        if not isinstance(x, str) or any(caracter.isdigit() for caracter in x):
             raise HotelManagementException("La cadena del nombre y apellidos no es válida.")
-        if len(x) >= 0 and len(x) <= 50:
+        if len(x) >= 10 and len(x) <= 50:
+            if bool(re.search(r"  ", x)):
+                raise HotelManagementException("La cadena del nombre y apellidos no es válida.")
             Separacion = x.split()
             if len(Separacion) < 2:
                 raise HotelManagementException("La cadena del nombre y apellidos no es válida.")
@@ -67,35 +69,35 @@ class HotelManager:
             raise HotelManagementException("La cadena del nombre y apellidos no es válida.")
 
     def validatePhoneNumber(self, x):
-        """Comentario"""
-        if not isinstance(x, str):
+        """Este método valida el número de teléfono"""
+        if not isinstance(x, str) or re.search("[a-zA-Z]", x):
             raise HotelManagementException("El número de teléfono no es válido.")
         if len(x) != 9:
             raise HotelManagementException("El número de teléfono no es válido.")
 
     def validateRoomType(self, x):
-        """Comentario"""
+        """Este método valida el tipo de habitación"""
         if x.lower() not in ("single", "double", "suite"):
             raise HotelManagementException("El tipo de habitación no es válido.")
 
     def validateArrival(self, x):
-        """Comentario"""
+        """Este método valida la fecha de llegada"""
         if not isinstance(x, str):
-            raise HotelManagementException("La fecha de entrada no es válida")
+            raise HotelManagementException("La fecha de entrada no es válida.")
         try:
             datetime.strptime(x, "%d/%m/%Y")
         except ValueError as Exc:
-            raise HotelManagementException("La fecha de entrada no es válida") from Exc
+            raise HotelManagementException("La fecha de entrada no es válida.") from Exc
 
     def validateNumDays(self, x):
-        """Comentario"""
-        if not isinstance(x, str):
+        """Este método valida el número de dias"""
+        if not isinstance(x, str) or re.search("[a-zA-Z]", x):
             raise HotelManagementException("El número de días no es válido.")
         if int(x) < 1 or int(x) > 10:
             raise HotelManagementException("El número de días no es válido.")
 
     def readDataFromJSOn(self, fi):
-        """Comentario"""
+        """Este método lee los archivos JSOn"""
         try:
             with open(fi, encoding='utf-8') as Af:
                 DATA = json.load(Af)
@@ -119,7 +121,7 @@ class HotelManager:
 
     def roomReservation(self, idcard: str, creditcard: str, date_arrival: str, name_and_surname: str,
                         phonenumber: str, room_type: str, numdays: str):
-        """Comentario"""
+        """Este método se encarga de la reserva de la habitación"""
 
         try:
             self.validateCreditCard(creditcard)
@@ -165,7 +167,7 @@ class HotelManager:
         return MyReservation.localizer
 
     def guestArrival(self, input_file: json):
-        "Comentario"
+        "Este método se encarga de la llegada"
         try:
             with open(input_file, "r", encoding="utf-8", newline="") as File:
                 InputData = json.load(File)
@@ -225,7 +227,7 @@ class HotelManager:
 
 
     def claves(self, input_data):
-        """HOLA"""
+        """Este método es suplementario al método guestArrival"""
         for _ in input_data:
             Claves = iter(input_data.keys())
             PrimeraClave = next(Claves)

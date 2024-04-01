@@ -1,9 +1,10 @@
-''' Class HotelStay (GE2.2) '''
+"""Created by Luca, Marcos and Alicia in mar 2024
+"""
 from datetime import datetime
 import hashlib
 
 class HotelStay():
-    """Comentario"""
+    """Clase HotelStay"""
     def __init__(self, idcard, localizer, numdays, roomtype  ):
         self.__alg = "SHA-256"
         self.__type = roomtype
