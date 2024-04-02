@@ -267,6 +267,7 @@ class HotelManager:
                 KeyList = json.load(File)
         except FileNotFoundError:
             KeyList = []
+            print("Not found check in")
         except json.JSONDecodeError as ex:
             raise HotelManagementException("JSON Decode Error - Formato JSON no válido") from ex
 
