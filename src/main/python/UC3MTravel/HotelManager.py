@@ -274,7 +274,6 @@ class HotelManager:
         Found = False
         Salida = None
         for Key in KeyList:
-            print(Key["_HotelStay__roomkey"])
             if room_key == Key["_HotelStay__roomkey"]:
                 Found = True
                 Salida = Key
@@ -283,8 +282,6 @@ class HotelManager:
 
         # Sólo se puede dejar la habitación en la fecha prevista.
         # Si la comparación no se cumple, la fecha no es válida.
-        print(self.fechaHoy())
-        print(Salida["_HotelStay__departure"])
         if str(Salida["_HotelStay__departure"]) != str(self.fechaHoy()):
             raise HotelManagementException("La fecha de salida no es válida")
 

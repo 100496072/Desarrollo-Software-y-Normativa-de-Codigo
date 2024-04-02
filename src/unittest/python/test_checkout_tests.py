@@ -16,6 +16,7 @@ class testRoomReservtionTests(TestCase):
         # Crear archivos temporales de prueba para check-in y check-out
         self.check_in_file = "check_in_test.json"
         self.check_out_file = "check_out_test.json"
+        self.nowrite_file = "no_write.json"
 
     def tearDown(self):
         # Eliminar archivos temporales después de cada prueba
@@ -79,7 +80,9 @@ class testRoomReservtionTests(TestCase):
         "Camino a seguir considerando que no se encuentra el archivo para los check out"
         guest = HotelManager()
         guest.check_in_file = self.check_in_file
-        guest.check_out_file = "nonexistent_check_out_file.json"
+        guest.check_out_file = self.check_out_file
+        if Path(guest.check_out_file).is_file():
+            Path(guest.check_out_file).unlink()
         with open(self.check_in_file, "w") as f:
             json.dump([{"_HotelStay__roomkey": "101", "_HotelStay__departure": "1718236800.0"}], f)
         # Probar archivo de check-out inexistente
@@ -108,7 +111,12 @@ class testRoomReservtionTests(TestCase):
         "Camino a seguir considerando que ha habido un error a la hora de abrir en modo escritura"
         guest = HotelManager()
         guest.check_in_file = self.check_in_file
-        guest.check_out_file = self.check_out_file
+        guest.check_out_file = self.nowrite_file
+        with open(self.check_in_file, "w") as f:
+            json.dump([{"_HotelStay__roomkey": "101", "_HotelStay__departure": "1718236800.0"}], f)
+        # Quitar permiso de escritura al archivo para los check out
+        if os.path.exists(guest.check_out_file):
+            os.chmod(guest.check_out_file, 0o444)
         # Probar error al escribir en el archivo de check-out
         with self.assertRaises(HotelManagementException) as error:
             guest.guestCheckout("101")
