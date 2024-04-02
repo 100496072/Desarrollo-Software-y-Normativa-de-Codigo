@@ -268,8 +268,10 @@ class HotelManager:
             raise HotelManagementException("JSON Decode Error - Formato JSON no válido") from ex
 
         # Busqueda de la roomkey en el fichero para saber si es válida
+        Found = False
+        Salida = None
         for Key in KeyList:
-            Found = False
+            print(Key["_HotelStay__roomkey"])
             if room_key == Key["_HotelStay__roomkey"]:
                 Found = True
                 Salida = Key
