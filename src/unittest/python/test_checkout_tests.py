@@ -88,7 +88,7 @@ class testRoomReservtionTests(TestCase):
         # Probar archivo de check-out inexistente
         with self.assertRaises(HotelManagementException) as error:
             guest.guestCheckout("101")
-        self.assertEqual(error.exception.message, "Error en el path o archivo")
+        self.assertEqual(error.exception.message, "Archivo de salida no encontrado")
 
     @freeze_time("13/6/2024")
     def test6(self):
