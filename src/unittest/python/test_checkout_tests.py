@@ -109,6 +109,8 @@ class testRoomReservtionTests(TestCase):
             guest.guestCheckout("101")
         self.assertEqual(error.exception.message, "JSON Decode Error - Formato JSON no válido")
 
+    #Un test parecido se utilizaría para comprobar el caso en el que no se pueda escribir en el archivo
+    #de los check out
     """@freeze_time("13/6/2024")
     def test7(self):
         "Camino a seguir considerando que ha habido un error a la hora de abrir en modo escritura"
