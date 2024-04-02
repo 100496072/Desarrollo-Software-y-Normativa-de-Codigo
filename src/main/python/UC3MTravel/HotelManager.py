@@ -22,7 +22,6 @@ class HotelManager:
         #las rutas indicadas
         self.check_in_file = ""  #str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/check_in.json"
         self.check_out_file = "" #str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/check_out.json"
-        pass
 
     def validateCreditCard(self, x):
         """Este método valida la tarjeta de crédito"""
