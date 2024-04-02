@@ -129,12 +129,13 @@ class testRoomReservtionTests(TestCase):
     def test8(self):
         "Camino idóneo"
         guest = HotelManager()
-        guest.check_in_file = self.check_in
-        guest.check_out_file = self.check_out
-        #Se introducen datos en los archivos temporales
+        guest.check_in_file = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/check_in.json"
+        guest.check_out_file = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/check_out.json"
+
+        # Se introducen datos en los archivos temporales
         with open(guest.check_in_file, "w") as f:
             json.dump([{"_HotelStay__roomkey": "101", "_HotelStay__departure": "1718236800.0"}], f)
+
         # Probar la salida exitosa
         result = guest.guestCheckout("101")
         self.assertTrue(result)
-
