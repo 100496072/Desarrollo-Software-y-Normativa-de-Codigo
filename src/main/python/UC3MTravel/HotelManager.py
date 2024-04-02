@@ -273,8 +273,6 @@ class HotelManager:
         # Busqueda de la roomkey en el fichero para saber si es válida
         Found = False
         Salida = None
-        print(KeyList)
-        print("Bucle")
         for Key in KeyList:
             print(Key["_HotelStay__roomkey"])
             if room_key == Key["_HotelStay__roomkey"]:
@@ -285,7 +283,9 @@ class HotelManager:
 
         # Sólo se puede dejar la habitación en la fecha prevista.
         # Si la comparación no se cumple, la fecha no es válida.
-        if Salida["_HotelStay__departure"] != self.fechaHoy():
+        print(self.fechaHoy())
+        print(Salida["_HotelStay__departure"])
+        if str(Salida["_HotelStay__departure"]) != str(self.fechaHoy()):
             raise HotelManagementException("La fecha de salida no es válida")
 
         # Se llama a la ruta del fichero donde se almacenan las salidas
