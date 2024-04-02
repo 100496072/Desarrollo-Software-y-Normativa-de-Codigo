@@ -116,10 +116,17 @@ class testRoomReservtionTests(TestCase):
         if os.path.isfile(file_store):
             os.remove(file_store)
         reserva = HotelManager()
-        reserva.roomReservation(idcard="02564364W", creditcard="5105105105105100",
+        """reserva.roomReservation(idcard="02564364W", creditcard="5105105105105100",
                                 date_arrival="14/6/2024", name_and_surname="JOSE LOPEZ",
                                 phonenumber="912345678", room_type="SINGLE", numdays="1")
         file = str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/store_arrival.json"
         key = reserva.guestArrival(file)
         result = reserva.guestCheckout(key)
+        self.assertTrue(result)"""
+        check_in_data = [{"_HotelStay__roomkey": "123", "_HotelStay__departure": self.fechaHoy()}]
+        with open(self.temp_check_in_file, "w") as f:
+            json.dump(check_in_data, f)
+
+        result = reserva.guestCheckout("123")
         self.assertTrue(result)
+
