@@ -17,8 +17,11 @@ class HotelManager:
     """Clase HotelManager"""
 
     def __init__(self):
-        self.check_in_file = ""
-        self.check_out_file = ""
+        #Esto es utilizado en la función checkout para forzar errores en los archivos
+        #Si se quiere utilizar los archivos json correctos, se debe introducir en estos atributos
+        #las rutas indicadas
+        self.check_in_file = ""  #str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/check_in.json"
+        self.check_out_file = "" #str(Path.home()) + "/PycharmProjects/G81.2024.T01.EG2/src/JsonFiles/check_out.json"
         pass
 
     def validateCreditCard(self, x):
@@ -256,7 +259,7 @@ class HotelManager:
     def guestCheckout(self, room_key):
         """Método que comprueba la salida del cliente"""
         # Se llama a la ruta del fichero donde se almacenan las reservas
-        FilePath = str(Path.home()) + self.check_in_file
+        FilePath = self.check_in_file
 
         # Apertura del fichero en modo lectura
         try:
@@ -270,6 +273,8 @@ class HotelManager:
         # Busqueda de la roomkey en el fichero para saber si es válida
         Found = False
         Salida = None
+        print(KeyList)
+        print("Bucle")
         for Key in KeyList:
             print(Key["_HotelStay__roomkey"])
             if room_key == Key["_HotelStay__roomkey"]:
@@ -284,7 +289,7 @@ class HotelManager:
             raise HotelManagementException("La fecha de salida no es válida")
 
         # Se llama a la ruta del fichero donde se almacenan las salidas
-        FileStore = str(Path.home()) + self.check_out_file
+        FileStore = self.check_out_file
 
         #Comprobamos que existe el fichero para las salidas
         try:
